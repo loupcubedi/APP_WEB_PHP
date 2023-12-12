@@ -39,3 +39,37 @@ foreach ($arrayFruits as $index => $fruit){
 - Valeur = nb jour du mois
 
 Faire une boucle qui affiche les mois et leur valeur dans un tableau HTML (<table>)
+*/
+$mois = [
+        "Janvier" => 31,
+        "Février" => 28,
+        "Mars" => 31,
+        "Avril" => 30,
+        "Mai" => 31,
+        "Juin" => 30,
+        "Juillet" => 31,
+        "Aout" => 31,
+        "Septembre" => 30,
+        "Octobre" => 31,
+        "Novembre" => 30,
+        "Décembre" => 31,
+]
+?>
+<table border="1">
+    <thead>
+    <tr>
+        <td>Mois</td>
+        <td>Nb Jour</td>
+    </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($mois as $month => $nbDays){
+            echo"<tr>
+            <td>{$month}</td>
+            <td>{$nbDays}</td>
+        </tr>";
+        }
+        ?>
+    </tbody>
+</table>
