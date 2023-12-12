@@ -51,11 +51,23 @@ function parler(string $prenom, int $age) :string
     return $phrase;
 }
 echo parler(age: 21, prenom: "Bruno");
-/*
- * Faire une fonction qui converti les °C en °F
 
-Pour convertir en degrés Celsius une température donnée en degrés Fahrenheit, il suffit de soustraire 32 et de diviser par 1,8 (9/5 = 1,8) le nombre ainsi obtenu. Pour 50 °F , on obtient : 50 − 32 = 18, puis 18/1,8 = 10 ; donc 50 °F = 10 °C .
+function convertirDegre(float $degres, $from, $to) :float
+{
+    switch ($to){
+        case "C":
+            $result =  ($degres - 32 )/ 1.8 ;
+            break;
+        case "F":
+            $result = $degres * 1.8 + 32;
+            break;
+    }
 
-Ensuite adapter la fonction pour qu’elle puisse convertir un degré (Fahrenheit, Celsius) en un autre (Fahrenheit, Celsius). Attention vous devez mettre en place vos talents de programmeur pour créer une fonction dont la signature (paramètres d’entrés et type de sortie) ne puisse plus bouger dans le temps. De telle sorte que plus tard on puisse ajouter les « Kelvin » dans le système
 
- */
+    return $result;
+}
+$cel = 36;
+$result = convertirDegre($cel, "F");
+echo "<p>{$cel}°C = {$result}°F</p>";
+$result = convertirDegre(96.8, "C");
+echo "<p>96.8°F = {$result}°C</p>";
