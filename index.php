@@ -117,19 +117,20 @@ foreach ($achats as $heure => $details)
     echo "<p>Voici le panier de {$details["Prenom"]}</p>";
     echo "<ul>";
         echo "<li> FRUITS :";
-            foreach ($details["Panier"]["Fruits"] as $fruit){
-                echo "{$fruit}, ";
+            foreach ($details["Panier"]["Fruits"] as $value){
+                echo "{$value}, ";
             }
         echo "</li>";
 
         echo "<li> LEGUMES :";
-            foreach ($details["Panier"]["Legume"] as $fruit){
-                echo "{$fruit}, ";
+            foreach ($details["Panier"]["Legume"] as $value){
+                echo "{$value}, ";
             }
         echo "</li>";
     echo "</ul>";
 }
 echo "<p>Le total est de {$total}€</p>";
+
 
 
 
