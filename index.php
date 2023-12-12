@@ -3,12 +3,12 @@ require("./inc/config.php");
 require("./inc/header.php");
 ?>
 <h1>Bienvenue sur notre BLOG</h1>
-<!-- Je souhaite
-- Sur index.php une liste html de 5 lien (balise <a>) élèves (Enzo ...)
-- Pour chaque élève un lien vers eleve.php (à créer)
-- eleve.php afiche Bonjour {eleve} ta note est de {note}
--->
-
+<ul>
+    <li><a href="eleve.php?nom=Enzo&note=A">Enzo</a></li>
+    <li><a href="eleve.php?nom=Bastien&note=C">Bastien</a></li>
+    <li><a href="eleve.php?nom=Evan&note=A">Evan</a></li>
+    <li><a href="eleve.php?nom=Raphael&note=B">Raphael</a></li>
+</ul>
 
 
 <?php   require("./inc/footer.php"); ?>
