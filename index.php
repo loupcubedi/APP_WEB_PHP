@@ -64,7 +64,8 @@ $mois = [
     </thead>
     <tbody>
         <?php
-        foreach ($mois as $month => $nbDays){
+        foreach ($mois as $month => $nbDays)
+        {
             echo"<tr>
             <td>{$month}</td>
             <td>{$nbDays}</td>
@@ -73,3 +74,63 @@ $mois = [
         ?>
     </tbody>
 </table>
+
+<?php
+$achats = [
+  "10:15" => [
+          "Prenom" => "Enzo",
+      "Prix" => 85,
+      "Panier" => [
+              "Fruits" => ["Fraise", "Framboise", "Pomme"],
+          "Legume" => ["Salade", "Endive"]
+      ]
+  ],
+    "10:30" => [
+        "Prenom" => "Bastien",
+        "Prix" => 680,
+        "Panier" => [
+            "Fruits" => ["Lichi", "Kiwi", "Clémentine"],
+            "Legume" => ["Avocat", "Pomme de Terre"]
+        ]
+    ],
+    "15:28" => [
+        "Prenom" => "Raphael",
+        "Prix" => 156,
+        "Panier" => [
+            "Fruits" => ["Pêche", "Banane", "Cassis"],
+            "Legume" => ["Aubergine", "Concombre", "Carotte"]
+        ]
+    ],
+];
+
+var_dump($achats["15:28"]["Panier"]["Fruits"]);
+
+/*
+ * Avec le tableau $achats
+ *  * Afficher la liste de course de chaque acheteur dans des balises ul>li
+ *  * Afficher le chiffre d'affaire total du magasin
+ */
+$total = 0;
+foreach ($achats as $heure => $details)
+{
+    $total += $details["Prix"];
+    echo "<p>Voici le panier de {$details["Prenom"]}</p>";
+    echo "<ul>";
+        echo "<li> FRUITS :";
+            foreach ($details["Panier"]["Fruits"] as $fruit){
+                echo "{$fruit}, ";
+            }
+        echo "</li>";
+
+        echo "<li> LEGUMES :";
+            foreach ($details["Panier"]["Legume"] as $fruit){
+                echo "{$fruit}, ";
+            }
+        echo "</li>";
+    echo "</ul>";
+}
+echo "<p>Le total est de {$total}€</p>";
+
+
+
+
