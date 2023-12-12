@@ -1,13 +1,20 @@
 <?php
-/*
- * dans article_add_form.php faire un formulaire pour « Ajouter un article » dont voici les champs nécessaires :
--	Titre : input type text
--	Description : texarea
--	Date de publication : input type date
--	Auteur : un <select> avec 5 <option> que sont les prénoms de camarades de classes
-Attention, pensez à bien mettre un attribut « name » à vos éléments de formulaire
-Créer /admin/article_show.php : récupérez les données du formulaire et afficher l’article dans du HTML.
+require("../inc/config.php");
+require("../inc/header.php");
+?>
+    <h1>Partie admin > Ajouter un article</h1>
 
-Dans les 2 fichiers Pensez aux require pour intégrer le footer et header html.
+<form method="post" action="article_show.php">
+    <input type="text" name="Titre">
+    <textarea name="Description"></textarea>
+    <input type="date" name="DatePublication">
+    <select name="Auteur">
+        <option value="Lukas">Lukas</option>
+        <option value="Enzo">Enzo</option>
+        <option value="Jules">Jules</option>
+        <option value="Loup">Loup</option>
+    </select>
+    <input type="submit">
+</form>
 
- */
+<?php   require("../inc/footer.php"); ?>
