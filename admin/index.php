@@ -2,11 +2,22 @@
 require("../inc/config.php");
 require("../inc/header.php");
 
-$requete = $bdd->query('SELECT * FROM articles ');
-$articles = $requete->fetchALL(PDO::FETCH_ASSOC);
-
+if($_POST){
+    $requete = $bdd->prepare("SELECT * FROM articles WHERE Id= :Id OR Titre like :search");
+    $requete->execute([
+        "Id" => $_POST["search"],
+        "search" => "%".$_POST["search"]."%",
+    ]);
+    $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
+}else{
+    $requete = $bdd->query("SELECT * FROM articles");
+    $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
     <h1>Partie admin, liste des articles :</h1>
+<form method="post">
+    <input type="text" name="search" placeholder="Rechercher....">
+</form>
     <!-- //Lister les articles pour la partie admin
 //Dans le /admin/index Afficher une liste des articles sous forme de tableau (Id, Titre, DatePublication et Auteur uniquement)
 //Prévoir 2 liens en attente href=# :
@@ -29,7 +40,7 @@ $articles = $requete->fetchALL(PDO::FETCH_ASSOC);
         foreach($articles as $article)
         {
             echo "<tr>";
-            echo "<th scope='row'><a href='#'>{$article["Id"]}</a></th>";
+            echo "<th scope='row'><a href='/admin/article_edit_form.php?Id={$article["Id"]}'>{$article["Id"]}</a></th>";
             echo "<td>{$article["Titre"]}</td>";
             echo "<td>{$article["DatePublication"]}</td>";
             echo "<td>{$article["Auteur"]}</td>";
