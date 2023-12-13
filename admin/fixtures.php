@@ -1,40 +1,34 @@
 <?php
-require("../inc/config.php");
+require ("../inc/config.php");
+//Exécuter une requête qui vide la table (truncate table articles)
+$requete = $bdd->prepare("TRUNCATE TABLE articles");
+$requete->execute();
 
-$db = $bdd;
+//Créer 2 array PHP « jeu de donnée »
+// - Un array PHP qui contient 6 Titres d’article différents
+$arrayTitre = ["PHP en force", "React JS qui monte", "C# toujorus au top", "Flutter déchire tout", "Java en baissse"];
+// - Un array PHP qui contient 6 Auteurs (prénom) différents
+$arrayAuteur = ["Enzo", "Lukas", "Rémi", "Bastien", "Loup", "Kylian"];
+//Créer une variable Datetime (date du jour)
+$dateDuJour = new DateTime();
+//Boucle (For ou While) de 200 itérations
+// - Incrémenter la date +1 jour à chaque tour de boucle
+// - Mélanger les tableaux
+// - Requête Insertion de données à chaque boucle (prendre le premier Index de chaque Tableau pour créer du « random » en BDD)
+//
+for($i=1;$i<=200;$i++){
+    $dateDuJour->modify("+1 day");
+    shuffle($arrayAuteur);
+    shuffle($arrayTitre);
+    $requete = $bdd->prepare("INSERT INTO articles (Titre, Description, DatePublication, Auteur) VALUES(:Titre, :Description,:DatePublication, :Auteur)");
 
-$request = $db->exec("TRUNCATE TABLE articles");
+    $requete->execute([
+        "Titre" => $arrayTitre[0],
+        "Description" => "Zypher est un langage de programmation moderne conçu pour offrir une expérience de développement puissante et flexible. Avec une syntaxe claire et concise, Zypher permet aux développeurs de créer des applications robustes et efficaces dans divers domaines, allant de l'informatique embarquée à la programmation web",
+        "DatePublication" => $dateDuJour->format("Y-m-d"),
+        "Auteur" => $arrayAuteur[0],
+    ]);
 
-$titres = ['Salut la team', 'Streamez kekra', 'FC KEKRA', 'Libérer lacrim', 'ouhi ouhahaha', 'chang chang'];
-$auteurs = ['Loup', 'Quentin', 'Evan', 'Bastien', 'Jules', 'Papate'];
-
-$date = new DateTime();
-
-for ($i = 0; $i < 200; $i++) {
-    $dateString = $date->format('Y-m-d');
-    $date->modify('+1 day');
-    shuffle($titres);
-    shuffle($auteurs);
-
-    $stmt = $db->prepare("INSERT INTO articles (titre, auteur, DatePublication) VALUES (?, ?, ?)");
-    $stmt->execute([$titres[0], $auteurs[0], $dateString]);
 }
 
-$stmt = $db->query("SELECT id, titre, DatePublication, auteur FROM articles");
-$articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-echo "<table>"; // Début du tableau
-foreach ($articles as $article) {
-    echo "<tr>";
-    echo "<td>{$article['id']}</td>";
-    echo "<td>{$article['titre']}</td>";
-    echo "<td>{$article['DatePublication']}</td>";
-    echo "<td>{$article['auteur']}</td>";
-    echo "<td style='text-align: right;'>";
-    echo "<a href='modifier.php?id={$article['id']}'><button>Modifier</button></a>";
-    echo "<a href='supprimer.php?id={$article['id']}'><button>Corbeille</button></a>";
-    echo "</td>";
-    echo "</tr>";
-}
-echo "</table>"; // Fin du tableau
-?>
+header("Location:/admin");
