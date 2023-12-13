@@ -10,14 +10,15 @@ $user = $requete->fetch(PDO::FETCH_ASSOC);
 
 // Compare mot de passe clair / hashé en base
 // Si pas ok back to login.php (Session "ErrorMessage")
-session_start();
-if(count($user) == 0){
+if(!$user){
     $_SESSION["ERROR"] = "Mail invalide";
     header("Location:/login.php");
+    exit();
 }
 if(!password_verify($_POST["Password"], $user["Password"])){
     $_SESSION["ERROR"] = "Password invalide";
     header("Location:/login.php");
+    exit();
 }
 
 // Si ok => Session "connecté"

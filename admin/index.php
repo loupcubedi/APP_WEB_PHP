@@ -1,7 +1,7 @@
 <?php
 require("../inc/config.php");
 require("../inc/header.php");
-
+var_dump($_SESSION);
 if($_POST){
     $requete = $bdd->prepare("SELECT * FROM articles WHERE Id= :Id OR Titre like :search");
     $requete->execute([
