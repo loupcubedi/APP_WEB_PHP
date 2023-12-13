@@ -1,5 +1,5 @@
 <?php
-const _DBHOSTNAME_ = "cours_php-mariadb106";
+const _DBHOSTNAME_ = "coursphp-mariadb106";
 const _DBUSERNAME_ = "docker";
 const _DBPASSWORD_ = "docker";
 const _DBNAME_ = "docker";
