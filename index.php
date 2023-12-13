@@ -12,7 +12,6 @@ if($_POST){
     $requete = $bdd->query("SELECT * FROM articles");
     $datas = $requete->fetchAll(PDO::FETCH_ASSOC);
 }
-var_dump($datas);
 
 ?>
 <h1>Bienvenue sur notre BLOG</h1>
