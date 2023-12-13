@@ -8,7 +8,7 @@ if($_POST){
 }
 $datas = $requete->fetchAll(PDO::FETCH_ASSOC);
 var_dump($datas);
-echo $datas[0]["Titre"];
+
 ?>
 <h1>Bienvenue sur notre BLOG</h1>
 
