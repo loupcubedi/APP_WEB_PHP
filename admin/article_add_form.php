@@ -4,7 +4,7 @@ require("../inc/header.php");
 ?>
     <h1>Partie admin > Ajouter un article</h1>
 
-<form method="post" action="article_show.php">
+<form method="post" action="/admin/article_add_script.php">
     <input type="text" name="Titre">
     <textarea name="Description"></textarea>
     <input type="date" name="DatePublication">

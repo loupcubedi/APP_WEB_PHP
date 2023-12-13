@@ -2,11 +2,16 @@
 require("./inc/config.php");
 require("./inc/header.php");
 if($_POST){
-    $requete = $bdd->query("SELECT * FROM articles WHERE Id={$_POST["search"]}");
+    $requete = $bdd->prepare("SELECT * FROM articles WHERE Id= :Id OR Titre like :search");
+    $requete->execute([
+            "Id" => $_POST["search"],
+            "search" => "%".$_POST["search"]."%",
+    ]);
+    $datas = $requete->fetchAll(PDO::FETCH_ASSOC);
 }else{
     $requete = $bdd->query("SELECT * FROM articles");
+    $datas = $requete->fetchAll(PDO::FETCH_ASSOC);
 }
-$datas = $requete->fetchAll(PDO::FETCH_ASSOC);
 var_dump($datas);
 
 ?>
