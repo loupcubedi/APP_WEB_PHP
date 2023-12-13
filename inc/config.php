@@ -24,6 +24,3 @@ function firstWords(int $count, string $sentence) :string
     return $resultat;
 
 }
-
-
-
