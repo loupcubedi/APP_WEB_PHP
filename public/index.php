@@ -13,5 +13,6 @@ function chargerClasse($class)
 }
 spl_autoload_register("chargerClasse");
 
-$articles = \src\Model\Article::SqlGetLast(20);
+$controller = new \src\Controller\ArticleController();
+echo $controller->index();
 
