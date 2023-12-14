@@ -39,3 +39,4 @@ if($controller != ''){
     $controller = new \src\Controller\ArticleController();
     echo $controller->index();
 }
+

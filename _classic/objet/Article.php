@@ -1,5 +1,5 @@
 <?php
-namespace src\Model;
+namespace objet;
 class Article{
     private ?int $Id = null;
     private ?string $Titre = null;
@@ -86,9 +86,9 @@ class Article{
         return $this;
     }
 
-    public static function SqlAdd(Article $article)
+    public static function SqlAdd(\PDO $bdd, Article $article)
     {
-        $requete = BDD::getInstance()->prepare("INSERT INTO articles (Titre, Description, DatePublication, Auteur, ImageRepository, ImageFilename) VALUES(:Titre, :Description,:DatePublication, :Auteur, :ImageRepository, :ImageFilename)");
+        $requete = $bdd->prepare("INSERT INTO articles (Titre, Description, DatePublication, Auteur, ImageRepository, ImageFilename) VALUES(:Titre, :Description,:DatePublication, :Auteur, :ImageRepository, :ImageFilename)");
 
         $requete->execute([
             "Titre" => $article->getTitre(),
@@ -100,26 +100,4 @@ class Article{
         ]);
     }
 
-    public static function SqlGetLast(int $nb)
-    {
-        $requete = BDD::getInstance()->prepare('SELECT * FROM articles ORDER BY Id DESC LIMIT :limit');
-        $requete->bindValue("limit", $nb, \PDO::PARAM_INT);
-        $requete->execute();
-
-        $articlesSql = $requete->fetchAll(\PDO::FETCH_ASSOC);
-        $articlesObjet = [];
-        foreach ($articlesSql as $articleSql){
-            $article = new Article();
-            $article->setTitre($articleSql["Titre"])
-                ->setDescription($articleSql["Description"])
-                ->setDatePublication(new \DateTime($articleSql["DatePublication"]))
-                ->setAuteur($articleSql["Auteur"])
-                ->setImageRepository($articleSql["ImageRepository"])
-                ->setImageFileName($articleSql["ImageFileName"]);
-            $articlesObjet[] = $article;
-        }
-        return $articlesObjet;
-
-
-    }
 }
