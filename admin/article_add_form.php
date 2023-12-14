@@ -4,7 +4,7 @@ require("../inc/header.php");
 ?>
     <h1>Partie admin > Ajouter un article</h1>
 
-<form method="post" action="/admin/article_add_script.php">
+<form method="post" action="/admin/article_add_script.php" enctype="multipart/form-data" >
     <input type="text" name="Titre">
     <textarea name="Description"></textarea>
     <input type="date" name="DatePublication">
@@ -14,6 +14,7 @@ require("../inc/header.php");
         <option value="Jules">Jules</option>
         <option value="Loup">Loup</option>
     </select>
+    <input type="file" name="Image">
     <input type="submit">
 </form>
 
