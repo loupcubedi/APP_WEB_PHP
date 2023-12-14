@@ -36,5 +36,13 @@ require("../inc/header.php");
     </select>
     <input type="submit">
 </form>
+<?php
+
+$filePath = $article["ImageRepository"]."/".$article["ImageFileName"];
+
+if($article["ImageRepository"] != "" && file_exists("../uploads/images/{$filePath}")){
+    echo "<img src='/uploads/images/{$filePath}'>";
+}
+?>
 
 <?php   require("../inc/footer.php"); ?>

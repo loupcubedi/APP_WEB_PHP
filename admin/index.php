@@ -1,7 +1,7 @@
 <?php
 require("../inc/config.php");
 require ("../inc/security.php");
-if(!haveGoodRole(["Directeur"])){
+if(!haveGoodRole(["Directeur", "Admin"])){
     $_SESSION["ERROR"] = "Pas le bon role !";
     header("Location:/login.php");
     exit();
