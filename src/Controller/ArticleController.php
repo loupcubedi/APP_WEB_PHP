@@ -10,7 +10,9 @@ class ArticleController extends AbstractController
     public function index()
     {
         $articles = Article::SqlGetLast(20);
-        return $this->twig->render("Article/index.html.twig");
+        return $this->twig->render("Article/index.html.twig",[
+            "articles" => $articles
+        ]);
     }
 
     public function fixtures()
