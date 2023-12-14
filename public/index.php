@@ -13,6 +13,4 @@ function chargerClasse($class)
 }
 spl_autoload_register("chargerClasse");
 
-$controller = new \src\Controller\ArticleController();
-echo $controller->index();
 
