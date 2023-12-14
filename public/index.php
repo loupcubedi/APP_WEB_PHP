@@ -13,10 +13,5 @@ function chargerClasse($class)
 }
 spl_autoload_register("chargerClasse");
 
-$article = new \src\Model\Article();
-$article->setTitre("Titre MVC")
-    ->setDescription("Grosse description")
-    ->setAuteur("Fabien")
-    ->setDatePublication(new DateTime());
-\src\Model\Article::SqlAdd($article);
-var_dump($article);
+$articles = \src\Model\Article::SqlGetLast(20);
+
