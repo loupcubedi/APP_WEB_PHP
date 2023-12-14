@@ -1,11 +1,11 @@
 <?php
-
+namespace objet;
 class Article{
     private ?int $Id = null;
     private ?string $Titre = null;
     private ?string $Description = null;
     private ?string $Auteur = null;
-    private ?DateTime $DatePublication = null;
+    private ?\DateTime $DatePublication = null;
     private ?string $ImageRepository = null;
     private ?string $ImageFileName = null;
 
@@ -53,12 +53,12 @@ class Article{
         return $this;
     }
 
-    public function getDatePublication(): ?DateTime
+    public function getDatePublication(): ?\DateTime
     {
         return $this->DatePublication;
     }
 
-    public function setDatePublication(?DateTime $DatePublication): Article
+    public function setDatePublication(?\DateTime $DatePublication): Article
     {
         $this->DatePublication = $DatePublication;
         return $this;
@@ -86,5 +86,18 @@ class Article{
         return $this;
     }
 
+    public static function SqlAdd(\PDO $bdd, Article $article)
+    {
+        $requete = $bdd->prepare("INSERT INTO articles (Titre, Description, DatePublication, Auteur, ImageRepository, ImageFilename) VALUES(:Titre, :Description,:DatePublication, :Auteur, :ImageRepository, :ImageFilename)");
+
+        $requete->execute([
+            "Titre" => $article->getTitre(),
+            "Description" => $article->getDescription(),
+            "DatePublication" => $article->getDatePublication()->format("Y-m-d"),
+            "Auteur" => $article->getAuteur(),
+            "ImageRepository" => $article->getImageRepository(),
+            "ImageFilename" => $article->getImageFileName(),
+        ]);
+    }
 
 }
