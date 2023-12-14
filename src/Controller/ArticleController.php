@@ -42,6 +42,8 @@ class ArticleController extends AbstractController
                 ->setDatePublication($dateDuJour);
             Article::SqlAdd($article);
         }
+
+        header("Location:/?controller=AdminArticle&action=list");
     }
 
 }
