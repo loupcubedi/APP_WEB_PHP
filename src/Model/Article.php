@@ -1,4 +1,5 @@
 <?php
+namespace src\Model;
 class Article{
     private ?int $Id = null;
     private ?string $Titre = null;
@@ -85,9 +86,9 @@ class Article{
         return $this;
     }
 
-    public static function SqlAdd(\PDO $bdd, Article $article)
+    public static function SqlAdd(Article $article)
     {
-        $requete = $bdd->prepare("INSERT INTO articles (Titre, Description, DatePublication, Auteur, ImageRepository, ImageFilename) VALUES(:Titre, :Description,:DatePublication, :Auteur, :ImageRepository, :ImageFilename)");
+        $requete = BDD::getInstance()->prepare("INSERT INTO articles (Titre, Description, DatePublication, Auteur, ImageRepository, ImageFilename) VALUES(:Titre, :Description,:DatePublication, :Auteur, :ImageRepository, :ImageFilename)");
 
         $requete->execute([
             "Titre" => $article->getTitre(),
