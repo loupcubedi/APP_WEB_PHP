@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
 {% block title %} Article {{ article.titre}} - {{ parent() }}{% endblock %}
+{% block css %}
+    <link href="assets/css/article.show.css" rel="stylesheet">
+{% endblock %}
 {% block body %}
     <h1>{{ article.titre }}</h1>
     <p><strong>Description :</strong>{{ article.description }}</p>
