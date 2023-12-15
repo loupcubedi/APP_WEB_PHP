@@ -57,8 +57,8 @@ class AdminArticleController extends AbstractController
                 ->setAuteur($_POST["Auteur"])
                 ->setImageRepository($sqlRepository)
                 ->setImageFileName($nomImage);
-            Article::SqlAdd($article);
-            header("Location:/?controller=AdminArticle&action=list");
+            $id = Article::SqlAdd($article);
+            header("Location:/?controller=Article&action=show&param={$id}");
             exit();
         }else{
             return $this->twig->render("Admin/Article/add.html.twig");
