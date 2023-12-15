@@ -4,9 +4,11 @@ $( "#Search" ).autocomplete({
         $.ajax({
             url: "http://www.cesi.local/ApiArticle/search",
             dataType: "json",
-            data: {"keyword": request.term},
-            contentType: "application/json",
-            method: "GET",
+            data: JSON.stringify({"keyword": request.term}),
+            type: "POST",
+            beforeSend: function (){
+                console.log("Waiting...");
+            },
             success: function (data) {
                 console.log(data);
                 var transformed = $.map(data, function (el) {
