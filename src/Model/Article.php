@@ -148,4 +148,21 @@ class Article{
             "Id" => $idArticle
         ]);
     }
+
+    public static function SqlGetById(int $id):Article
+    {
+        $requete = BDD::getInstance()->prepare('SELECT * FROM articles WHERE Id=:id');
+        $requete->bindValue("id", $id, \PDO::PARAM_INT);
+        $requete->execute();
+
+        $articleSql = $requete->fetch(\PDO::FETCH_ASSOC);
+        $article = new Article();
+        $article->setTitre($articleSql["Titre"])
+            ->setDescription($articleSql["Description"])
+            ->setDatePublication(new \DateTime($articleSql["DatePublication"]))
+            ->setAuteur($articleSql["Auteur"])
+            ->setImageRepository($articleSql["ImageRepository"])
+            ->setImageFileName($articleSql["ImageFileName"]);
+        return $article;
+    }
 }
