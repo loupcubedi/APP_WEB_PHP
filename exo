@@ -1,0 +1,14 @@
+Vous allez créer la fonctionnalité « Modification Article », le but étant depuis la liste des articles, en cliquant sur l’Id d’un article d’aller sur une page formulaire avec les données déjà renseignées.
+
+Vous allez utiliser la requete SQL pour récupérer l’Article selon l’ID, puis une vue Twig, puis ensuite la méthode dans le controleur AdminArticleController.php
+
+Pour la vue il faudra positionner le « Select » du champ Auteur sur le bon « Option » vous devrez faire des IF Twig
+<option value="Lukas" {% if (article.Auteur == "Lukas") %}selected{% endif %}>Lukas</option>
+
+Pour le contrôleur, reprenez la logique de la méthode "add" (if post etc.)
+
+Bonus : Pour ceux qui veulent gérer la modification d'image :
+ - Faire un champ "hidden" qui contient le lien vers l'image actuelle
+ - Si il y'a une image de postée alors :
+    - Si le champ hidden n'est pas vide => unlink de l'image (lien de l'image récupérée par le champ hidden)
+    - Upload la nouvelle image (déjà fait dans le add)

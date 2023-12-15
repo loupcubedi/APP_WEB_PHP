@@ -3,6 +3,7 @@
 namespace src\Controller;
 
 use Twig\Extension\DebugExtension;
+use Twig\TwigFunction;
 
 abstract class AbstractController
 {
@@ -15,5 +16,10 @@ abstract class AbstractController
             'debug' => true
         ]);
         $this->twig->addExtension(new DebugExtension());
+        $fileExist = new TwigFunction('file_exist',function(string $filepath){
+            return file_exists($filepath);
+        });
+        $this->twig->addFunction($fileExist);
+
     }
 }

@@ -86,7 +86,7 @@ class Article{
         return $this;
     }
 
-    public static function SqlAdd(Article $article)
+    public static function SqlAdd(Article $article):int
     {
         $requete = BDD::getInstance()->prepare("INSERT INTO articles (Titre, Description, DatePublication, Auteur, ImageRepository, ImageFilename) VALUES(:Titre, :Description,:DatePublication, :Auteur, :ImageRepository, :ImageFilename)");
 
@@ -98,6 +98,8 @@ class Article{
             "ImageRepository" => $article->getImageRepository(),
             "ImageFilename" => $article->getImageFileName(),
         ]);
+
+        return BDD::getInstance()->lastInsertId();
     }
 
     public static function SqlGetLast(int $nb)
