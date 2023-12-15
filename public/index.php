@@ -14,9 +14,10 @@ function chargerClasse($class)
 }
 spl_autoload_register("chargerClasse");
 //Routeur
-$controller = (isset($_GET["controller"])) ? $_GET["controller"] : '';
-$action = (isset($_GET["action"])) ? $_GET["action"] : '';
-$param = (isset($_GET["param"])) ? $_GET["param"] : '';
+$url = explode("/",$_GET["url"]);
+$controller = (isset($url[0])) ? $url[0] : '';
+$action = (isset($url[1])) ? $url[1] : '';
+$param = (isset($url[2])) ? $url[2] : '';
 
 if($controller != ''){
     try{
