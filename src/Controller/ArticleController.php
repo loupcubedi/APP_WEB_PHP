@@ -15,6 +15,14 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    public function show(int $id)
+    {
+        $article = Article::SqlGetById($id);
+        return $this->twig->render("Article/show.html.twig",[
+            "article" => $article
+        ]);
+    }
+
     public function fixtures()
     {
         //Exécuter une requête qui vide la table (truncate table articles)
