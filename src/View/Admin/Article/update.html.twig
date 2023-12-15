@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-{% block title %}ADMIN - {{ parent() }} -Update d'un Article {% endblock %}
+{% block title %}ADMIN - {{ parent() }} - Update d'un Article {% endblock %}
 
 {% block body %}
     <h1>Update Article</h1>
@@ -38,7 +38,8 @@
             <p>
                 <img src="/uploads/images/{{ article.ImageRepository }}/{{ article.ImageFileName }}" class="img-thumbnail"/>
             </p>
-            <input type="hidden" name="ImageActuelle" value="{{ article.ImageRepository }}/{{ article.ImageFileName }}">
+            <input type="hidden" name="ImageRepository" value="{{ article.ImageRepository }}">
+            <input type="hidden" name="ImageFileName" value="{{ article.ImageFileName }}">
         {% endif %}
 
 

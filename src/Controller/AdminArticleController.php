@@ -71,8 +71,9 @@ class AdminArticleController extends AbstractController
     {
         $article = Article::SqlGetById($id);
         if(isset($_POST["Titre"])){
-            $sqlRepository = null;
-            $nomImage = null;
+            $sqlRepository = (isset($_POST["ImageRepository"])) ? $_POST["ImageRepository"] : null;
+            $nomImage = (isset($_POST["ImageFileName"])) ? $_POST["ImageFileName"] : null;
+
             if(isset($_FILES["Image"]["name"])){
                 $extensionsAutorisee = ["jpg", "jpeg", "png"];
                 $extension = pathinfo($_FILES["Image"]["name"], PATHINFO_EXTENSION);
@@ -91,8 +92,8 @@ class AdminArticleController extends AbstractController
                     move_uploaded_file($_FILES["Image"]["tmp_name"], $repository."/".$nomImage);
                 }
                 //Si il y'avait une image déjà en place on la vire :
-                if(isset($_POST["ImageActuelle"]) && $_POST["ImageActuelle"] != '' && file_exists("{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$_POST["ImageActuelle"]}")){
-                    unlink("{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$_POST["ImageActuelle"]}");
+                if(isset($_POST["ImageFileName"]) && $_POST["ImageFileName"] != '' && file_exists("{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$_POST["ImageRepository"]}/{$_POST["ImageFileName"]}")){
+                    unlink("{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$_POST["ImageRepository"]}/{$_POST["ImageFileName"]}");
                 }
             }
 
