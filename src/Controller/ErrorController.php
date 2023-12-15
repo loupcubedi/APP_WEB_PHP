@@ -2,12 +2,14 @@
 
 namespace src\Controller;
 
-use src\Model\Article;
-use src\Model\BDD;
+class ErrorController extends AbstractController
+{
+    public function showMessage(\Exception $e) :string
+    {
+        return $this->twig->render("error.html.twig",[
+            "code" => $e->getCode(),
+            "message" => $e->getMessage()
+        ]);
+    }
 
-
-class ErrorController {
-public function handleException($exception) {
-echo 'Erreur rencontrée : ' . $exception->getMessage();
-}
 }

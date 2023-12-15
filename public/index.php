@@ -27,14 +27,15 @@ if($controller != ''){
             if(method_exists($class,$action)){
                 echo $controller->$action($param);
             }else{
-                throw new Exception("Méthode $action inexistante dans $class");
+                throw new Exception("Méthode $action inexistante dans $class", 1028);
             }
         }else{
-            throw new Exception("Controller $class inexistant");
+            throw new Exception("Controller $class inexistant", 1032);
         }
     }catch (Exception $e){
         // On verra plus tard pour faire un ErrorController
-        echo $e->getMessage();
+        $controller = new \src\Controller\ErrorController();
+        echo $controller->showMessage($e);
     }
 }else{
     $controller = new \src\Controller\ArticleController();
