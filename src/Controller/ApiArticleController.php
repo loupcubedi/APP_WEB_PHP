@@ -55,10 +55,36 @@ class ApiArticleController
             ]);
         }
 
+        //Upload de l'image
+        $sqlRepository = null;
+        $nomImage = null;
+
+        if(isset($json->Image)){
+            // Renommer le fichier image (normalement le client envoi aussi le nom de l'image dans un autre champ pour tester les extension etc.)
+            $nomImage = uniqid().".jpg";
+
+            // Fabriquer répertoire d'accueil
+            $dateNow = new \DateTime();
+            $sqlRepository = $dateNow->format("Y/m");
+            $repository = "{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$sqlRepository}";
+            if(!is_dir($repository)){
+                mkdir($repository,0777,true);
+            }
+
+
+            $ifp = fopen("{$repository}/{$nomImage}", "wb");
+            fwrite($ifp, base64_decode($json->Image));
+            fclose($ifp);
+
+        }
+
+
         $article = new Article();
         $article->setTitre($json->Titre)
             ->setDescription($json->Description)
             ->setDatePublication(new \DateTime($json->DatePublication))
+            ->setImageRepository($sqlRepository)
+            ->setImageFileName($nomImage)
             ->setAuteur($json->Auteur);
         $id = Article::SqlAdd($article);
         return json_encode([
