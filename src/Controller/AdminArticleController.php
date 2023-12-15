@@ -6,6 +6,7 @@ use src\Model\Article;
 
 class AdminArticleController extends AbstractController
 {
+
     //?controller=AdminArticle&action=list
     public function list()
     {

@@ -35,7 +35,7 @@ if($controller != ''){
     }catch (Exception $e){
         // On verra plus tard pour faire un ErrorController
         $controller = new \src\Controller\ErrorController();
-        echo $controller->showMessage($e->getMessage());
+        echo $controller->showMessage($e);
     }
 }else{
     $controller = new \src\Controller\ArticleController();
