@@ -25,6 +25,10 @@ class ApiArticleController
         if($result["code"] == 1){
             return json_encode($result);
         }
+        //var_dump($result);
+        if(!in_array("Toto",$result["data"]->datas->roles)){
+            return json_encode("Vous n'avez pa le bon role");
+        }
 
         $article = Article::SqlGetAll();
         return json_encode($article);

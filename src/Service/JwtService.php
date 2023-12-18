@@ -75,7 +75,8 @@ class JwtService
 
         $result = [
             "code" => 0,
-            "body" => "Token OK"
+            "body" => "Token OK",
+            "data" => $token
         ];
         return $result;
 
