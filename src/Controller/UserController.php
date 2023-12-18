@@ -66,4 +66,10 @@ class UserController extends AbstractController
             throw new \Exception("Vous dn'avez pas le bon role pour accéder à cette page");
         }
     }
+
+    public function logout()
+    {
+        unset($_SESSION["login"]);
+        header("Location:/");
+    }
 }
