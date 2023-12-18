@@ -10,6 +10,7 @@ class AdminArticleController extends AbstractController
     //?controller=AdminArticle&action=list
     public function list()
     {
+        UserController::haveGoodRole(["Verificateur"]);
         // Requete SQL
         $articles = Article::SqlGetAll();
         // La vue

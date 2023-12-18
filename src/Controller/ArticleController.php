@@ -25,6 +25,7 @@ class ArticleController extends AbstractController
 
     public function fixtures()
     {
+        UserController::haveGoodRole(["Administrateur"]);
         //Exécuter une requête qui vide la table (truncate table articles)
         $requete = BDD::getInstance()->prepare("TRUNCATE TABLE articles")->execute();
         //Créer 2 array PHP « jeu de donnée »
