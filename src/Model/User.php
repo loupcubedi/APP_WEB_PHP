@@ -5,8 +5,9 @@ namespace src\Model;
 class User
 {
     private ?int $Id = null;
-
     private String $Mail;
+    private String $Password;
+    private array $Roles;
 
     public function getId(): ?int
     {
@@ -30,12 +31,12 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->Password;
     }
 
-    public function setPassword(?string $Password): User
+    public function setPassword(string $Password): User
     {
         $this->Password = $Password;
         return $this;
@@ -52,26 +53,18 @@ class User
         return $this;
     }
 
-    private ?String $Password;
-
-    private Array $Roles;
-
-    public static function SqlAdd(User $user)
-        :int
+    public static function SqlAdd(User $user) :int
     {
-        $requete = BDD::getInstance()->("INSERT INTO users(Email,Password,NomPrenom,Roles)
-        VALUES(:Email,:Password,:NomPrenom,:Roles)");
+        $requete = BDD::getInstance()->prepare("INSERT INTO users (Email, Password, NomPrenom, Roles) VALUES(:Email, :Password, :NomPrenom, :Roles)");
 
-        $requete->executes([
-            "Email" => $user ->GetMail(),
-            "Password" => $user ->GetPassword(),
-            "NomPrenom" => "Olivier Carglass",
-            "Roles" =>  json_encode ($user->getRoles())
+        $requete->execute([
+            "Email" => $user->getMail(),
+            "Password" => $user->getPassword(),
+            "NomPrenom" => "Olivier Carglass", //Prévoir un champ dans le formulaire pour ça à l'avenir
+            "Roles" => json_encode($user->getRoles())
         ]);
 
-        return BDD::getInstance()->lastinsertId();
+        return BDD::getInstance()->lastInsertId();
     }
-
-
 
 }
