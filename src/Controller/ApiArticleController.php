@@ -3,6 +3,7 @@
 namespace src\Controller;
 
 use src\Model\Article;
+use src\Service\JwtService;
 
 class ApiArticleController
 {
@@ -20,6 +21,15 @@ class ApiArticleController
                 "Message" => "Get Attendu"
             ]);
         }
+        $result = JwtService::checkToken();
+        if($result["code"] == 1){
+            return json_encode($result);
+        }
+        //var_dump($result);
+        if(!in_array("Administrateur",$result["data"]->roles)){
+            return json_encode("Vous n'avez pa le bon role");
+        }
+
         $article = Article::SqlGetAll();
         return json_encode($article);
 
