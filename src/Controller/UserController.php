@@ -29,7 +29,15 @@ class UserController extends AbstractController
             $user = User::SqlGetByMail($_POST["mail"]);
             if($user!=null){
                 //Comparer le mdp hasché avec celui saisi dans le formulaire
-
+                if(password_verify($_POST["password"], $user->getPassword())){
+                    $_SESSION["login"] = [
+                        "Email" => $user->getMail(),
+                        "Roles" => $user->getRoles()
+                    ];
+                    header("Location:/AdminArticle/list");
+                }else{
+                    throw new \Exception("Mot de passe incorrect pour {$_POST["mail"]}");
+                }
             }else{
                 throw new \Exception("Aucun user avec ce mail en base");
             }
@@ -40,6 +48,5 @@ class UserController extends AbstractController
         }else{
             return $this->twig->render("User/login.html.twig");
         }
-
     }
 }
