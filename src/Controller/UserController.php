@@ -129,6 +129,7 @@ class UserController extends AbstractController
             "mail" => $user->getMail(),
             "roles" => $user->getRoles()
         ]);
-
     }
+
+
 }
