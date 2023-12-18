@@ -20,6 +20,6 @@ abstract class AbstractController
             return file_exists($filepath);
         });
         $this->twig->addFunction($fileExist);
-
+        $this->twig->addGlobal("session", $_SESSION);
     }
 }
