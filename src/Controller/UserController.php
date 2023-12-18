@@ -22,17 +22,44 @@ class UserController extends AbstractController
         }
     }
 
+    // Inside src/Controller/UserController.php
+
+// ...
+
     public function login()
     {
-        if(isset($_POST["mail"]) && isset($_POST["password"])){
-            //Requete SQL qui va cherches les info du User avec le mail
+        if (isset($_POST["mail"]) && isset($_POST["password"])) {
+            $user_data = User::getByEmail($_POST["mail"]);
 
-            //Comparer le mdp hasché avec celui saisi dans le formulaire
+            if ($user_data) {
+                // User exists, now check the password
+                if (password_verify($_POST["password"], $user_data['Password'])) {
+                    // Password is correct, create the session
+                    session_start();
+                    $_SESSION['user_id'] = $user_data['Id'];
+                    $_SESSION['user_roles'] = json_decode($user_data['Roles'], true);
 
-            //Créer les sessions sinon Lever une Exception
-        }else{
+                    // Redirect to the user's profile or dashboard page
+                    header("Location: /User/dashboard");
+                    exit();
+                } else {
+                    // Password is incorrect
+                    $error = 'The password you entered is incorrect.';
+                }
+            } else {
+                // No user found with that email
+                $error = 'No account found with that email address.';
+            }
+
+            // Redirect back to the login page with an error message
+            header("Location: /User/login?error=" . urlencode($error));
+            exit();
+        } else {
+            // Render the login page if the POST variables aren't set
             return $this->twig->render("User/login.html.twig");
         }
-
     }
+
+// ...
+
 }

@@ -67,4 +67,40 @@ class User
         return BDD::getInstance()->lastInsertId();
     }
 
+    // Inside src/Model/User.php
+
+// ...
+
+    public static function getByEmail(string $email)
+    {
+        // Assuming you have a function like this that returns a MySQLi connection
+        $conn = BDD::getMysqliConnection();
+
+        // Sanitize the email to prevent SQL injection
+        $email = mysqli_real_escape_string($conn, $email);
+
+        // Prepare the SQL statement
+        $sql = "SELECT * FROM users WHERE Email = '$email' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+
+        // Check for errors
+        if(!$result) {
+            // Handle error - notify the administrator, log to a file, show an error screen, etc.
+            return null;
+        }
+
+        $user_data = mysqli_fetch_assoc($result);
+        mysqli_free_result($result);
+
+        // Return the user data or null if not found
+        return $user_data;
+    }
+
+// ...
+
+
+
+
+
+
 }
