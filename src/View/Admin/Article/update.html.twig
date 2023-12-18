@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mise à jour de l'article{% endblock %}
+
+{% block body %}
+    <h1>Mise à jour de l'article</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        <div>
+            <label for="Titre">Titre</label>
+            <input type="text" id="Titre" name="Titre" value="{{ article.getTitre }}" required>
+        </div>
+
+        <div>
+            <label for="Description">Description</label>
+            <textarea id="Description" name="Description" required>{{ article.getDescription }}</textarea>
+        </div>
+
+        <div>
+            <label for="Auteur">Auteur</label>
+            <input type="text" id="Auteur" name="Auteur" value="{{ article.getAuteur }}" required>
+        </div>
+
+        <div>
+            <label for="DatePublication">Date de publication</label>
+            <input type="date" id="DatePublication" name="DatePublication" value="{{ article.getDatePublication|date('Y-m-d') }}" required>
+        </div>
+
+        <div>
+            <label for="Image">Image</label>
+            <input type="file" id="Image" name="Image">
+            {% if article.getImageFileName %}
+                <img src="/uploads/images/{{ article.getImageRepository }}/{{ article.getImageFileName }}" alt="Image actuelle" style="max-width: 200px;">
+            {% endif %}
+        </div>
+
+        <div>
+            <button type="submit">Mettre à jour</button>
+        </div>
+    </form>
+
+    <a href="/?controller=AdminArticle&action=list">Retour à la liste des articles</a>
+{% endblock %}
