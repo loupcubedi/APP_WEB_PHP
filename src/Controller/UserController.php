@@ -21,4 +21,18 @@ class UserController extends AbstractController
             return $this->twig->render("User/create.html.twig");
         }
     }
+
+    public function login()
+    {
+        if(isset($_POST["mail"]) && isset($_POST["password"])){
+            //Requete SQL qui va cherches les info du User avec le mail
+
+            //Comparer le mdp hasché avec celui saisi dans le formulaire
+
+            //Créer les sessions sinon Lever une Exception
+        }else{
+            return $this->twig->render("User/login.html.twig");
+        }
+
+    }
 }
