@@ -3,6 +3,7 @@
 namespace src\Controller;
 
 use src\Model\User;
+use src\Service\JwtService;
 
 class UserController extends AbstractController
 {
@@ -106,9 +107,28 @@ class UserController extends AbstractController
             ]);
         }
         // Récupérer les info de l'utilisateur par son mail
-
+        $user = User::SqlGetByMail($json->mail);
+        if($user == null){
+            header("HTTP/1.1 403 Forbiden");
+            return json_encode([
+                "code" => 1,
+                "Message" => "User inexistant"
+            ]);
+        }
         // Comparer le mot de pase avec celui hashé en bdd
+        if(!password_verify($json->password, $user->getPassword())){
+            header("HTTP/1.1 403 Forbiden");
+            return json_encode([
+                "code" => 1,
+                "Message" => "Mot de passe invalide"
+            ]);
+        }
 
         // Retourne JWT
+        return JwtService::createToken([
+            "mail" => $user->getMail(),
+            "roles" => $user->getRoles()
+        ]);
+
     }
 }
