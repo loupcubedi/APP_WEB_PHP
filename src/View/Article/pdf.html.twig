@@ -1,9 +1,4 @@
-{% extends "base.html.twig" %}
-{% block title %} Article {{ article.titre}} - {{ parent() }}{% endblock %}
-{% block css %}
-    <link href="/assets/css/article.show.css" rel="stylesheet">
-{% endblock %}
-{% block body %}
+
     <h1>{{ article.titre }}</h1>
     <p><strong>Description :</strong>{{ article.description }}</p>
     <p><strong>Auteur :</strong>{{ article.Auteur }}</p>
@@ -18,10 +13,3 @@
         {% endif %}
 
     </p>
-
-    <p>
-
-        <a href="/Article/pdf/{{ article.id }}" class="btn btn-primary">Exporter en PDF</a>
-
-    </p>
-{%  endblock %}
