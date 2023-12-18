@@ -11,7 +11,7 @@ class BDD
     private static function initInstance() :void
     {
         // Code de connexion
-        $host = "cours_php-mariadb106";
+        $host = "coursphp-mariadb106";
         $username = "docker";
         $password = "docker";
         $dbname = "docker";

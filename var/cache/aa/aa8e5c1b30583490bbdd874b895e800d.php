@@ -52,10 +52,11 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65\" crossorigin=\"anonymous\">
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css\" rel=\"stylesheet\" />
     <link href=\"/assets/css/main.css\" rel=\"stylesheet\">
+    <link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css\">
     ";
-        // line 12
-        $this->displayBlock('css', $context, $blocks);
         // line 13
+        $this->displayBlock('css', $context, $blocks);
+        // line 14
         echo "
 </head>
 <body>
@@ -68,32 +69,39 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
                 <a class=\"nav-link\" href=\"/\">Accueil</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/?controller=AdminArticle&action=list\">Admin List</a>
+                <a class=\"nav-link\" href=\"/AdminArticle/list\">Admin List</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/?controller=AdminArticle&action=add\">Admin Add</a>
+                <a class=\"nav-link\" href=\"/AdminArticle/add\">Admin Add</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/?controller=Article&action=fixtures\">Fixtures</a>
+                <a class=\"nav-link\" href=\"/Article/fixtures\">Fixtures</a>
             </li>
         </ul>
     </div>
+    <form class=\"d-flex\">
+        <input class=\"form-control me-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\" id=\"Search\">
+    </form>
 
 </nav>
 
 <div class=\"container\">
 
     ";
-        // line 40
+        // line 44
         $this->displayBlock('body', $context, $blocks);
-        // line 41
+        // line 45
         echo "</div>
 
 <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4\" crossorigin=\"anonymous\"></script>
+<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>
+<script src=\"https://code.jquery.com/ui/1.13.1/jquery-ui.min.js\"></script>
+<script src=\"/assets/js/script.js\"></script>
+
 ";
-        // line 44
+        // line 52
         $this->displayBlock('javascript', $context, $blocks);
-        // line 45
+        // line 53
         echo "
 </body>
 </html>
@@ -107,19 +115,19 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
         echo "BLOG CESI";
     }
 
-    // line 12
+    // line 13
     public function block_css($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 40
+    // line 44
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 44
+    // line 52
     public function block_javascript($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -138,7 +146,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
      */
     public function getDebugInfo()
     {
-        return array (  123 => 44,  117 => 40,  111 => 12,  104 => 8,  97 => 45,  95 => 44,  90 => 41,  88 => 40,  59 => 13,  57 => 12,  50 => 8,  41 => 1,);
+        return array (  131 => 52,  125 => 44,  119 => 13,  112 => 8,  105 => 53,  103 => 52,  94 => 45,  92 => 44,  60 => 14,  58 => 13,  50 => 8,  41 => 1,);
     }
 
     public function getSourceContext()
@@ -154,6 +162,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65\" crossorigin=\"anonymous\">
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css\" rel=\"stylesheet\" />
     <link href=\"/assets/css/main.css\" rel=\"stylesheet\">
+    <link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css\">
     {% block css %}{% endblock %}
 
 </head>
@@ -167,16 +176,19 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
                 <a class=\"nav-link\" href=\"/\">Accueil</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/?controller=AdminArticle&action=list\">Admin List</a>
+                <a class=\"nav-link\" href=\"/AdminArticle/list\">Admin List</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/?controller=AdminArticle&action=add\">Admin Add</a>
+                <a class=\"nav-link\" href=\"/AdminArticle/add\">Admin Add</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/?controller=Article&action=fixtures\">Fixtures</a>
+                <a class=\"nav-link\" href=\"/Article/fixtures\">Fixtures</a>
             </li>
         </ul>
     </div>
+    <form class=\"d-flex\">
+        <input class=\"form-control me-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\" id=\"Search\">
+    </form>
 
 </nav>
 
@@ -186,6 +198,10 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
 </div>
 
 <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4\" crossorigin=\"anonymous\"></script>
+<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>
+<script src=\"https://code.jquery.com/ui/1.13.1/jquery-ui.min.js\"></script>
+<script src=\"/assets/js/script.js\"></script>
+
 {% block javascript %}{% endblock %}
 
 </body>
