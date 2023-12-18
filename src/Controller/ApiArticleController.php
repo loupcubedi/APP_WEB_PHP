@@ -26,7 +26,7 @@ class ApiArticleController
             return json_encode($result);
         }
         //var_dump($result);
-        if(!in_array("Toto",$result["data"]->datas->roles)){
+        if(!in_array("Administrateur",$result["data"]->roles)){
             return json_encode("Vous n'avez pa le bon role");
         }
 
