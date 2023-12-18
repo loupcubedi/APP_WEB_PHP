@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../vendor/autoload.php";
 // Autoload de classe qui nous évite de faire des require à toutes les sauces
 function chargerClasse($class)
