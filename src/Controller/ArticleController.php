@@ -51,7 +51,7 @@ class ArticleController extends AbstractController
             Article::SqlAdd($article);
         }
 
-        header("Location:/?controller=AdminArticle&action=list");
+        header("Location:/AdminArticle/list");
     }
 
 }

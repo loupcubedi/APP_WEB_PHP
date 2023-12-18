@@ -1,43 +1,52 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Mise à jour de l'article{% endblock %}
+{% extends "base.html.twig" %}
+{% block title %}ADMIN - {{ parent() }} - Update d'un Article {% endblock %}
 
 {% block body %}
-    <h1>Mise à jour de l'article</h1>
+    <h1>Update Article</h1>
 
     <form method="post" enctype="multipart/form-data">
-        <div>
-            <label for="Titre">Titre</label>
-            <input type="text" id="Titre" name="Titre" value="{{ article.getTitre }}" required>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Saisir un titre" name="Titre" value="{{ article.Titre }}">
         </div>
 
-        <div>
-            <label for="Description">Description</label>
-            <textarea id="Description" name="Description" required>{{ article.getDescription }}</textarea>
+        <div class="mb-3">
+            <textarea class="form-control" name="Description" rows="3">{{ article.Description }}</textarea>
         </div>
 
-        <div>
-            <label for="Auteur">Auteur</label>
-            <input type="text" id="Auteur" name="Auteur" value="{{ article.getAuteur }}" required>
+        <div class="mb-3">
+            <input type="date" class="form-control" name="DatePublication" value="{{ article.DatePublication|date("Y-m-d") }}">
         </div>
 
-        <div>
-            <label for="DatePublication">Date de publication</label>
-            <input type="date" id="DatePublication" name="DatePublication" value="{{ article.getDatePublication|date('Y-m-d') }}" required>
+        <div class="mb-3">
+            <select class="form-select" name="Auteur">
+                <option value="Enzo" {% if(article.Auteur =="Enzo")%}selected{% endif %}>Enzo</option>
+                <option value="Lukas" {% if(article.Auteur =="Lukas")%}selected{% endif %}>Lukas</option>
+                <option value="Rémi" {% if(article.Auteur =="Rémi")%}selected{% endif %}>Rémi</option>
+                <option value="Bastien" {% if(article.Auteur =="Bastien")%}selected{% endif %}>Bastien</option>
+                <option value="Loup" {% if(article.Auteur =="Loup")%}selected{% endif %}>Loup</option>
+                <option value="Kylian" {% if(article.Auteur =="Kylian")%}selected{% endif %}>Kylian</option>
+            </select>
         </div>
 
-        <div>
-            <label for="Image">Image</label>
-            <input type="file" id="Image" name="Image">
-            {% if article.getImageFileName %}
-                <img src="/uploads/images/{{ article.getImageRepository }}/{{ article.getImageFileName }}" alt="Image actuelle" style="max-width: 200px;">
-            {% endif %}
+        <div class="mb-3">
+            <input type="file" class="custom-file-input" name="Image">
         </div>
 
-        <div>
-            <button type="submit">Mettre à jour</button>
-        </div>
+        {% if file_exist( './uploads/images/'~article.ImageRepository~'/'~article.ImageFileName ) and article.ImageFileName !="" %}
+            <p>Image Actuelle :</p>
+            <p>
+                <img src="/uploads/images/{{ article.ImageRepository }}/{{ article.ImageFileName }}" class="img-thumbnail"/>
+            </p>
+            <input type="hidden" name="ImageRepository" value="{{ article.ImageRepository }}">
+            <input type="hidden" name="ImageFileName" value="{{ article.ImageFileName }}">
+        {% endif %}
+
+
+
+
+        <button type="submit" class="btn btn-primary">Valider</button>
     </form>
 
-    <a href="/?controller=AdminArticle&action=list">Retour à la liste des articles</a>
+
 {% endblock %}

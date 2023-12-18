@@ -1,6 +1,6 @@
 <?php
 namespace src\Model;
-class Article{
+class Article implements \JsonSerializable {
     private ?int $Id = null;
     private ?string $Titre = null;
     private ?string $Description = null;
@@ -164,7 +164,64 @@ class Article{
             ->setDatePublication(new \DateTime($articleSql["DatePublication"]))
             ->setAuteur($articleSql["Auteur"])
             ->setImageRepository($articleSql["ImageRepository"])
+            ->setId($articleSql["Id"])
             ->setImageFileName($articleSql["ImageFileName"]);
         return $article;
     }
+
+    public static function SqlUpdate(Article $article)
+    {
+        $requete = BDD::getInstance()->prepare("UPDATE articles SET Titre=:Titre, Description=:Description, DatePublication=:DatePublication, Auteur=:Auteur, ImageRepository=:ImageRepository, ImageFileName=:ImageFileName WHERE Id=:Id");
+
+        $bool = $requete->execute([
+            "Titre" => $article->getTitre(),
+            "Description" => $article->getDescription(),
+            "DatePublication" => $article->getDatePublication()->format("Y-m-d"),
+            "Auteur" => $article->getAuteur(),
+            "ImageRepository" => $article->getImageRepository(),
+            "ImageFileName" => $article->getImageFileName(),
+            "Id"=> $article->getId()
+        ]);
+    }
+
+    public static function SqlSearch(string $keyword): array
+    {
+        $requete = BDD::getInstance()->prepare("SELECT * FROM articles WHERE Titre like :Titre OR Description like :Description");
+        $bool = $requete->execute([
+            "Titre" => "%{$keyword}%",
+            "Description" => "%{$keyword}%"
+        ]);
+        $articlesSql = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        $articlesObjet = [];
+        foreach ($articlesSql as $articleSql){
+            $article = new Article();
+            $article->setTitre($articleSql["Titre"])
+                ->setId($articleSql["Id"])
+                ->setDescription($articleSql["Description"])
+                ->setDatePublication(new \DateTime($articleSql["DatePublication"]))
+                ->setAuteur($articleSql["Auteur"])
+                ->setImageRepository($articleSql["ImageRepository"])
+                ->setImageFileName($articleSql["ImageFileName"]);
+            $articlesObjet[] = $article;
+        }
+        return $articlesObjet;
+
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+          "DatePublication" => $this->getDatePublication()->format("Y-m-d"),
+          "Id" => $this->getId(),
+          "Titre" => $this->getTitre(),
+          "Auteur" => $this->getAuteur(),
+          "Description" => $this->getDescription(),
+          "ImageRepository" => $this->getImageRepository(),
+          "ImageFileName" => $this->getImageFileName(),
+        ];
+    }
 }
+
+
+
+
