@@ -72,4 +72,43 @@ class UserController extends AbstractController
         unset($_SESSION["login"]);
         header("Location:/");
     }
+
+    //Route qu'on va appeler par API
+    public function loginjwt()
+    {
+        header("Content-Type: application/json; charset=utf-8");
+        if($_SERVER["REQUEST_METHOD"] != "POST"){
+            header("HTTP/1.1 405 Method Not Allowed");
+            return json_encode([
+                "code" => 1,
+                "Message" => "POST Attendu"
+            ]);
+        }
+
+        //Récupération du body en String
+        $data = file_get_contents("php://input");
+        //Conversion du string en JSON
+        $json = json_decode($data);
+
+        if(empty($json)){
+            header("HTTP/1.1 403 Forbiden");
+            return json_encode([
+                "code" => 1,
+                "Message" => "Il faut des données"
+            ]);
+        }
+
+        if(!isset($json->mail) || !isset($json->password)){
+            header("HTTP/1.1 403 Forbiden");
+            return json_encode([
+                "code" => 1,
+                "Message" => "Il manque le mail ou le password"
+            ]);
+        }
+        // Récupérer les info de l'utilisateur par son mail
+
+        // Comparer le mot de pase avec celui hashé en bdd
+
+        // Retourne JWT
+    }
 }
