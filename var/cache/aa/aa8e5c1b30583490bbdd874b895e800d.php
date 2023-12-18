@@ -51,10 +51,11 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
         echo "</title>
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65\" crossorigin=\"anonymous\">
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css\" rel=\"stylesheet\" />
+    <link href=\"/assets/css/main.css\" rel=\"stylesheet\">
     ";
-        // line 11
-        $this->displayBlock('css', $context, $blocks);
         // line 12
+        $this->displayBlock('css', $context, $blocks);
+        // line 13
         echo "
 </head>
 <body>
@@ -83,16 +84,16 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
 <div class=\"container\">
 
     ";
-        // line 39
-        $this->displayBlock('body', $context, $blocks);
         // line 40
+        $this->displayBlock('body', $context, $blocks);
+        // line 41
         echo "</div>
 
 <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4\" crossorigin=\"anonymous\"></script>
 ";
-        // line 43
-        $this->displayBlock('javascript', $context, $blocks);
         // line 44
+        $this->displayBlock('javascript', $context, $blocks);
+        // line 45
         echo "
 </body>
 </html>
@@ -106,19 +107,19 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
         echo "BLOG CESI";
     }
 
-    // line 11
+    // line 12
     public function block_css($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 39
+    // line 40
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 43
+    // line 44
     public function block_javascript($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -137,7 +138,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
      */
     public function getDebugInfo()
     {
-        return array (  122 => 43,  116 => 39,  110 => 11,  103 => 8,  96 => 44,  94 => 43,  89 => 40,  87 => 39,  58 => 12,  56 => 11,  50 => 8,  41 => 1,);
+        return array (  123 => 44,  117 => 40,  111 => 12,  104 => 8,  97 => 45,  95 => 44,  90 => 41,  88 => 40,  59 => 13,  57 => 12,  50 => 8,  41 => 1,);
     }
 
     public function getSourceContext()
@@ -152,6 +153,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
     <title>{% block title %}BLOG CESI{% endblock %}</title>
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65\" crossorigin=\"anonymous\">
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css\" rel=\"stylesheet\" />
+    <link href=\"/assets/css/main.css\" rel=\"stylesheet\">
     {% block css %}{% endblock %}
 
 </head>
