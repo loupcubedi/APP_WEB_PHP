@@ -26,10 +26,17 @@ class UserController extends AbstractController
     {
         if(isset($_POST["mail"]) && isset($_POST["password"])){
             //Requete SQL qui va cherches les info du User avec le mail
+            $user = User::SqlGetByMail($_POST["mail"]);
+            if($user!=null){
+                //Comparer le mdp hasché avec celui saisi dans le formulaire
 
-            //Comparer le mdp hasché avec celui saisi dans le formulaire
+            }else{
+                throw new \Exception("Aucun user avec ce mail en base");
+            }
+
 
             //Créer les sessions sinon Lever une Exception
+            // Et rediriger vers /AdminArticle/list
         }else{
             return $this->twig->render("User/login.html.twig");
         }

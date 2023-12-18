@@ -67,4 +67,21 @@ class User
         return BDD::getInstance()->lastInsertId();
     }
 
+    public static function SqlGetByMail(string $mail): ?User
+    {
+        $requete = BDD::getInstance()->prepare("SELECT * FROM users WHERE Email=:mail");
+        $requete->execute([
+            "mail" => $mail
+        ]);
+        $datas = $requete->fetch(\PDO::FETCH_ASSOC);
+        if($datas != false){
+            $user = new User();
+            $user->setId($datas["Id"])
+                ->setMail($datas["Email"])
+                ->setPassword($datas["Password"])
+                ->setRoles(json_decode($datas["Roles"]));
+            return $user;
+        }
+        return null;
+    }
 }
