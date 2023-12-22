@@ -9,7 +9,7 @@
         <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Nom</th>
+            <th scope="col">Association</th>
             <th scope="col">Date de l'événement</th>
             <th scope="col">Email Contact</th>
             <th scope="col">nom_contact</th>
@@ -27,7 +27,7 @@
         {% else %}
             {% for don in donsDuSang %}
                 <tr>
-                    <td>{{ don.id }}</td>
+                    <td><a href="/AdminDonDuSang/update/{{ don.id }}">{{ don.id }}</a></td>
                     <td>{{ don.nom }}</td>
                     <td>{{ don.date_evenement|date('d/m/Y') }}</td>
                     <td>{{ don.getEmailContact() }}</td>

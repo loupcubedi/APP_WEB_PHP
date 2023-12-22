@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+{% block title %}ADMIN - {{ parent() }} - Update Don du Sang{% endblock %}
+
+{% block body %}
+    <h1>Update Don du Sang</h1>
+
+    <form method="post">
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Nom" name="Nom" value="{{ don.nom }}">
+        </div>
+
+        <div class="mb-3">
+            <textarea class="form-control" placeholder="Description" name="Description" rows="3">{{ don.description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <input type="date" class="form-control" name="DateEvenement" value="{{ don.date_evenement|date("Y-m-d") }}">
+        </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Email Contact" name="EmailContact" value="{{ don.getEmailContact }}">
+        </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Nom Contact" name="NomContact" value="{{ don.nomContact }}">
+        </div>
+
+        <div class="mb-3">
+            <input type="number" class="form-control" placeholder="Prix" name="Prix" value="{{ don.prix }}">
+        </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Latitude" name="Latitude" value="{{ don.latitude }}">
+        </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Longitude" name="Longitude" value="{{ don.longitude }}">
+        </div>
+
+        <div class="mb-3">
+            <input type="file" class="custom-file-input" name="Image">
+        </div>
+
+        {% if file_exist( './uploads/images/'~article.ImageRepository~'/'~article.ImageFileName ) and article.ImageFileName !="" %}
+            <p>Image Actuelle :</p>
+            <p>
+                <img src="/uploads/images/{{ article.ImageRepository }}/{{ article.ImageFileName }}" class="img-thumbnail"/>
+            </p>
+            <input type="hidden" name="ImageRepository" value="{{ article.ImageRepository }}">
+            <input type="hidden" name="ImageFileName" value="{{ article.ImageFileName }}">
+        {% endif %}
+
+
+        <button type="submit" class="btn btn-primary">Valider</button>
+    </form>
+{% endblock %}

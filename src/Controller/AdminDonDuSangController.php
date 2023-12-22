@@ -47,11 +47,47 @@ class AdminDonDuSangController extends AbstractController
     // Met à jour un don du sang
     public function update(int $id)
     {
+        // Récupérer le don du sang à mettre à jour
         $donDuSang = DonDuSang::SqlGetById($id);
 
-        // Ici, tu peux ajouter la logique pour le traitement du formulaire de mise à jour
-        // et la mise à jour des informations du don du sang dans la base de données.
+        // Vérifier si le formulaire a été soumis
+        if (isset($_POST["Nom"])) {
+            // Récupérer les données du formulaire
+            $nom = $_POST["Nom"];
+            $description = $_POST["Description"];
+            $dateEvenement = new \DateTime($_POST["DateEvenement"]);
+            $emailContact = $_POST["EmailContact"]; // Ajout de la récupération de l'email
+            $nomContact = $_POST["NomContact"]; // Ajout de la récupération du nom du contact
+            $prix = $_POST["Prix"];
+            $latitude = floatval($_POST["Latitude"]); // Conversion en float
+            $longitude = floatval($_POST["Longitude"]); // Conversion en float
+
+            // Mettre à jour les propriétés du don du sang
+            $donDuSang->setNom($nom)
+                ->setDescription($description)
+                ->setDateEvenement($dateEvenement)
+                ->setEmailContact($emailContact) // Mise à jour de l'email
+                ->setNomContact($nomContact) // Mise à jour du nom du contact
+                ->setPrix($prix)
+                ->setLatitude($latitude)
+                ->setLongitude($longitude);
+
+            // Mettre à jour le don du sang dans la base de données
+            DonDuSang::SqlUpdate($donDuSang);
+
+            // Rediriger l'utilisateur vers la liste des dons après la mise à jour
+            header("Location:/AdminDonDuSang/list");
+            exit();
+
+        } else {
+            // Afficher le formulaire de mise à jour avec les données actuelles du don du sang
+            return $this->twig->render("Admin/DonDuSang/update.html.twig", [
+                "don" => $donDuSang
+            ]);
+        }
     }
+
+
 
     public function fixtures()
     {
@@ -62,7 +98,9 @@ class AdminDonDuSangController extends AbstractController
 
         // Créer des tableaux avec des données pour les titres, les noms de contact et les prix
         $arrayTitre = ["loupbd@gmail.com", "test@test.test", "lephpcrigolo@gmail.test", "motorola@gmail.com", "viveleflutter@gmail.com"];
-        $arrayNomsContact = ["Dupont", "Lefèvre", "Lebuel", "Duront", "Jean"];
+        $arrayNomassociation = ["Croix rouge", "EFS", "Don de Sang pour la Vie", "Don du Sang Bénévole", "Solidarité Don de Sang"];
+        $arrayNomsContact = ["Levebre Pierrick", "Jean Lefrancais", "Anoa Lebron", "Caitlin DeMatos", "Loup Bauduin", "Fabien Lierville", "Zerick Leneveu"];
+
 
         // Créer une variable Datetime (date du jour)
         $dateDuJour = new \DateTime();
@@ -74,6 +112,8 @@ class AdminDonDuSangController extends AbstractController
 
             // Sélectionner un nom de contact aléatoire
             $nomContact = $arrayNomsContact[array_rand($arrayNomsContact)];
+            $nomAssociation = $arrayNomassociation[array_rand($arrayNomassociation)];
+
 
             // Générer un prix aléatoire entre 1 et 50
             $prixAleatoire = mt_rand(1, 50);
@@ -81,7 +121,7 @@ class AdminDonDuSangController extends AbstractController
             $dondusang = new DonDuSang();
             $dondusang->setEmailContact($arrayTitre[0])
                 ->setDescription("Zypher est un langage de programmation moderne conçu pour offrir une expérience de développement puissante et flexible. Avec une syntaxe claire et concise, Zypher permet aux développeurs de créer des applications robustes et efficaces dans divers domaines, allant de l'informatique embarquée à la programmation web")
-                ->setNom($nomContact)
+                ->setNom($nomAssociation)
                 ->setNomContact($nomContact)
                 ->setDateEvenement($dateDuJour)
                 ->setPrix($prixAleatoire); // Utiliser le prix aléatoire

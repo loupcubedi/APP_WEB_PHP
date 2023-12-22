@@ -1,6 +1,7 @@
 <?php
 
 namespace src\Model;
+use \PDO;
 
 
 
@@ -180,13 +181,28 @@ class DonDuSang implements \JsonSerializable {
     public static function SqlGetById(int $id): DonDuSang {
         $bdd = BDD::getInstance();
         $requete = $bdd->prepare("SELECT * FROM dons_du_sang WHERE id = :id");
-        $requete->execute(["id" => $id]);
+        $requete->bindValue(":id", $id, \PDO::PARAM_INT); // Lier le paramètre :id
+        $requete->execute();
         $donDuSangData = $requete->fetch(PDO::FETCH_ASSOC);
 
         $donDuSang = new DonDuSang();
-        // ... Set the properties of $donDuSang with $donDuSangData
+        $donDuSang->setId($donDuSangData["id"])
+            ->setNom($donDuSangData["nom"])
+            ->setDescription($donDuSangData["description"])
+            ->setDateEvenement(new \DateTime($donDuSangData["date_evenement"]))
+            ->setPrix($donDuSangData["prix"])
+            ->setLatitude($donDuSangData["latitude"])
+            ->setLongitude($donDuSangData["longitude"])
+            ->setNomContact($donDuSangData["nom_contact"])
+            ->setEmailContact($donDuSangData["email_contact"])
+            ->setPhotoUrl($donDuSangData["photo_url"]);
+
         return $donDuSang;
     }
+
+
+
+
 
 // Méthode pour mettre à jour un lieu de don du sang dans la base de données
     public static function SqlUpdate(DonDuSang $donDuSang): bool {
