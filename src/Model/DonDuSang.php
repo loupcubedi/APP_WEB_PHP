@@ -111,7 +111,7 @@ class DonDuSang implements \JsonSerializable {
     }
 
     // JSON Serialize
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         return [
             'id' => $this->getId(),
             'nom' => $this->getNom(),
@@ -149,12 +149,31 @@ class DonDuSang implements \JsonSerializable {
     }
 
 // Méthode pour obtenir tous les lieux de don du sang de la base de données
-    public static function SqlGetAll(): array {
+    public static function SqlGetAll() {
         $bdd = BDD::getInstance();
-        $requete = $bdd->prepare("SELECT * FROM dons_du_sang");
+        $requete = $bdd->prepare('SELECT * FROM dons_du_sang');
         $requete->execute();
-        return $requete->fetchAll(PDO::FETCH_ASSOC);
+        $donsDuSangSql = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        $donsDuSangObjet = [];
+
+        foreach ($donsDuSangSql as $donSql) {
+            $donDuSang = new DonDuSang();
+            $donDuSang->setId($donSql["id"])
+                ->setNom($donSql["nom"])
+                ->setDescription($donSql["description"])
+                ->setDateEvenement(new \DateTime($donSql["date_evenement"]))
+                ->setPrix($donSql["prix"])
+                ->setLatitude($donSql["latitude"])
+                ->setLongitude($donSql["longitude"])
+                ->setNomContact($donSql["nom_contact"])
+                ->setEmailContact($donSql["email_contact"])
+                ->setPhotoUrl($donSql["photo_url"]);
+            $donsDuSangObjet[] = $donDuSang;
+        }
+
+        return $donsDuSangObjet;
     }
+
 
 // Méthode pour obtenir un lieu de don du sang spécifique par son ID
     public static function SqlGetById(int $id): DonDuSang {

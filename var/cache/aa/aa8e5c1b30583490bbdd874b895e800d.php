@@ -69,13 +69,13 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
                 <a class=\"nav-link\" href=\"/\">Accueil</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/AdminArticle/list\">Admin List</a>
+                <a class=\"nav-link\" href=\"/AdminDonDuSang/list\">Admin List</a>
             </li>
             <li class=\"nav-item\">
                 <a class=\"nav-link\" href=\"/AdminArticle/add\">Admin Add</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/Article/fixtures\">Fixtures</a>
+                <a class=\"nav-link\" href=\"/AdminDonDuSang/fixtures\">Fixtures</a>
             </li>
         </ul>
     </div>
@@ -195,13 +195,13 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
                 <a class=\"nav-link\" href=\"/\">Accueil</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/AdminArticle/list\">Admin List</a>
+                <a class=\"nav-link\" href=\"/AdminDonDuSang/list\">Admin List</a>
             </li>
             <li class=\"nav-item\">
                 <a class=\"nav-link\" href=\"/AdminArticle/add\">Admin Add</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/Article/fixtures\">Fixtures</a>
+                <a class=\"nav-link\" href=\"/AdminDonDuSang/fixtures\">Fixtures</a>
             </li>
         </ul>
     </div>

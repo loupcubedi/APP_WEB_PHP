@@ -1,12 +1,12 @@
 <?php
 require ("../inc/config.php");
 //Exécuter une requête qui vide la table (truncate table articles)
-$requete = $bdd->prepare("TRUNCATE TABLE articles");
+$requete = $bdd->prepare("TRUNCATE TABLE dons_du_sang");
 $requete->execute();
 
 //Créer 2 array PHP « jeu de donnée »
 // - Un array PHP qui contient 6 Titres d’article différents
-$arrayTitre = ["PHP en force", "React JS qui monte", "C# toujorus au top", "Flutter déchire tout", "Java en baissse"];
+$arrayTitre = ["loupbd@gmail.com", "test@test.test", "lephpcrigolo@gmail.test", "motorola@gmail.com", "viveleflutter@gmail.com"];
 // - Un array PHP qui contient 6 Auteurs (prénom) différents
 $arrayAuteur = ["Enzo", "Lukas", "Rémi", "Bastien", "Loup", "Kylian"];
 //Créer une variable Datetime (date du jour)
@@ -20,7 +20,7 @@ for($i=1;$i<=200;$i++){
     $dateDuJour->modify("+1 day");
     shuffle($arrayAuteur);
     shuffle($arrayTitre);
-    $requete = $bdd->prepare("INSERT INTO articles (Titre, Description, DatePublication, Auteur) VALUES(:Titre, :Description,:DatePublication, :Auteur)");
+    $requete = $bdd->prepare("INSERT INTO dons_du_sang (email_contact, description, date_evenement, nom) VALUES(:Titre, :Description,:DatePublication, :Auteur)");
 
     $requete->execute([
         "Titre" => $arrayTitre[0],

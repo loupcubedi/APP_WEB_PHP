@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} - Liste des Dons du Sang{% endblock %}
+
+{% block body %}
+    <h1>Liste des Dons du Sang</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Date de l'événement</th>
+            <th scope="col">Email Contact</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if donsDuSang is empty %}
+            <tr>
+                <td colspan="5">Aucun don du sang trouvé.</td>
+            </tr>
+        {% else %}
+            {% for don in donsDuSang %}
+                <tr>
+                    <td>{{ don.id }}</td>
+                    <td>{{ don.nom }}</td>
+                    <td>{{ don.date_evenement|date('d/m/Y') }}</td>
+                    <td>{{ don.getEmailContact() }}</td>
+
+                    <td>
+                        <form method="post" action="/AdminDonDuSang/delete">
+                            <input type="hidden" name="id" value="{{ don.id }}">
+                            <input type="hidden" name="token" value="{{ token }}">
+                            <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
