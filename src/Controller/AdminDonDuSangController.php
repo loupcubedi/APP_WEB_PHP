@@ -56,31 +56,41 @@ class AdminDonDuSangController extends AbstractController
     public function fixtures()
     {
         UserController::haveGoodRole(["Administrateur"]);
-        //Exécuter une requête qui vide la table (truncate table articles)
-        $requete = BDD::getInstance()->prepare("TRUNCATE TABLE dons_du_sang")->execute();
-        //Créer 2 array PHP « jeu de donnée »
-        $arrayTitre = ["loupbd@gmail.com", "test@test.test", "lephpcrigolo@gmail.test", "motorola@gmail.com", "viveleflutter@gmail.com"];
-// - Un array PHP qui contient 6 Auteurs (prénom) différents
-        $arrayAuteur = ["Enzo", "Lukas", "Rémi", "Bastien", "Loup", "Kylian"];
-        //Créer une variable Datetime (date du jour)
-        $dateDuJour = new \DateTime();
-        //Boucle (For ou While) de 200 itérations
-        // - Incrémenter la date +1 jour à chaque tour de boucle
-        // - Mélanger les tableaux
-        // - Requête Insertion de données à chaque boucle (prendre le premier Index de chaque Tableau pour créer du « random » en BDD)
 
-        for($i=1;$i<=200;$i++) {
+        // Exécuter une requête qui vide la table (truncate table dons_du_sang)
+        $requete = BDD::getInstance()->prepare("TRUNCATE TABLE dons_du_sang")->execute();
+
+        // Créer des tableaux avec des données pour les titres, les noms de contact et les prix
+        $arrayTitre = ["loupbd@gmail.com", "test@test.test", "lephpcrigolo@gmail.test", "motorola@gmail.com", "viveleflutter@gmail.com"];
+        $arrayNomsContact = ["Dupont", "Lefèvre", "Lebuel", "Duront", "Jean"];
+
+        // Créer une variable Datetime (date du jour)
+        $dateDuJour = new \DateTime();
+
+        // Boucle de 200 itérations
+        for ($i = 1; $i <= 200; $i++) {
             $dateDuJour->modify("+1 day");
-            shuffle($arrayAuteur);
             shuffle($arrayTitre);
+
+            // Sélectionner un nom de contact aléatoire
+            $nomContact = $arrayNomsContact[array_rand($arrayNomsContact)];
+
+            // Générer un prix aléatoire entre 1 et 50
+            $prixAleatoire = mt_rand(1, 50);
+
             $dondusang = new DonDuSang();
             $dondusang->setEmailContact($arrayTitre[0])
                 ->setDescription("Zypher est un langage de programmation moderne conçu pour offrir une expérience de développement puissante et flexible. Avec une syntaxe claire et concise, Zypher permet aux développeurs de créer des applications robustes et efficaces dans divers domaines, allant de l'informatique embarquée à la programmation web")
-                ->setNom($arrayAuteur[0])
-                ->setDateEvenement($dateDuJour);
+                ->setNom($nomContact)
+                ->setNomContact($nomContact)
+                ->setDateEvenement($dateDuJour)
+                ->setPrix($prixAleatoire); // Utiliser le prix aléatoire
+
             DonDuSang::SqlAdd($dondusang);
         }
 
         header("Location:/AdminDonDuSang/list");
     }
+
+
 }
