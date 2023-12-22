@@ -96,17 +96,28 @@ class __TwigTemplate_fb4aad95c4b05749dde488106feabfe6 extends Template
             // line 24
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["article"], "Auteur", [], "any", false, false, false, 24), "html", null, true);
             echo "</td>
-                <td><a href=\"/AdminArticle/delete/";
-            // line 25
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["article"], "Id", [], "any", false, false, false, 25), "html", null, true);
-            echo "\"><i class=\"bi bi-trash\"></i></a></td>
+                <td>
+                    ";
+            // line 29
+            echo "                    <form method=\"post\" action=\"/AdminArticle/delete\">
+                        <input type=\"hidden\" name=\"id\" value=\"";
+            // line 30
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["article"], "Id", [], "any", false, false, false, 30), "html", null, true);
+            echo "\">
+                        <button type=\"submit\" class=\"btn btn-danger\"><i class=\"bi bi-trash\"></i></button>
+                        <input type=\"hidden\" name=\"token\" value=\"";
+            // line 32
+            echo twig_escape_filter($this->env, ($context["token"] ?? null), "html", null, true);
+            echo "\">
+                    </form>
+                </td>
             </tr>
         ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['article'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 28
+        // line 37
         echo "
         </tbody>
     </table>
@@ -135,7 +146,7 @@ class __TwigTemplate_fb4aad95c4b05749dde488106feabfe6 extends Template
      */
     public function getDebugInfo()
     {
-        return array (  110 => 28,  101 => 25,  97 => 24,  93 => 23,  87 => 22,  81 => 21,  78 => 20,  74 => 19,  59 => 6,  55 => 5,  47 => 3,  36 => 1,);
+        return array (  121 => 37,  110 => 32,  105 => 30,  102 => 29,  97 => 24,  93 => 23,  87 => 22,  81 => 21,  78 => 20,  74 => 19,  59 => 6,  55 => 5,  47 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -164,7 +175,16 @@ class __TwigTemplate_fb4aad95c4b05749dde488106feabfe6 extends Template
                 <td><a href=\"/Article/show/{{ article.Id }}\">{{ article.Titre }}</a></td>
                 <td>{{ article.DatePublication|date('d/m/Y') }}
                 <td>{{ article.Auteur }}</td>
-                <td><a href=\"/AdminArticle/delete/{{ article.Id }}\"><i class=\"bi bi-trash\"></i></a></td>
+                <td>
+                    {#
+                    <a href=\"/AdminArticle/delete/{{ article.Id }}\"><i class=\"bi bi-trash\"></i></a>
+                    #}
+                    <form method=\"post\" action=\"/AdminArticle/delete\">
+                        <input type=\"hidden\" name=\"id\" value=\"{{ article.Id }}\">
+                        <button type=\"submit\" class=\"btn btn-danger\"><i class=\"bi bi-trash\"></i></button>
+                        <input type=\"hidden\" name=\"token\" value=\"{{ token }}\">
+                    </form>
+                </td>
             </tr>
         {% endfor %}
 

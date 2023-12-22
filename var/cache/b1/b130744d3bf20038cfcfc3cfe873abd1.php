@@ -105,9 +105,13 @@ class __TwigTemplate_8a1a965c838f891943e3ab6d83496240 extends Template
     </p>
 
     <p>
-        ";
-        // line 26
-        echo "    </p>
+
+        <a href=\"/Article/pdf/";
+        // line 24
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["article"] ?? null), "id", [], "any", false, false, false, 24), "html", null, true);
+        echo "\" class=\"btn btn-primary\">Exporter en PDF</a>
+
+    </p>
 ";
     }
 
@@ -132,7 +136,7 @@ class __TwigTemplate_8a1a965c838f891943e3ab6d83496240 extends Template
      */
     public function getDebugInfo()
     {
-        return array (  110 => 26,  104 => 19,  95 => 15,  92 => 14,  90 => 13,  84 => 10,  80 => 9,  76 => 8,  71 => 7,  67 => 6,  62 => 4,  58 => 3,  48 => 2,  37 => 1,);
+        return array (  111 => 24,  104 => 19,  95 => 15,  92 => 14,  90 => 13,  84 => 10,  80 => 9,  76 => 8,  71 => 7,  67 => 6,  62 => 4,  58 => 3,  48 => 2,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -159,9 +163,9 @@ class __TwigTemplate_8a1a965c838f891943e3ab6d83496240 extends Template
     </p>
 
     <p>
-        {#
+
         <a href=\"/Article/pdf/{{ article.id }}\" class=\"btn btn-primary\">Exporter en PDF</a>
-        #}
+
     </p>
 {%  endblock %}", "Article/show.html.twig", "/var/www/html/src/View/Article/show.html.twig");
     }
