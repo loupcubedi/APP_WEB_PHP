@@ -82,15 +82,26 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
     <form class=\"d-flex\">
         <input class=\"form-control me-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\" id=\"Search\">
     </form>
-
-</nav>
+    ";
+        // line 39
+        if (twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "login", [], "any", true, true, false, 39)) {
+            // line 40
+            echo "        <a class=\"btn btn-danger\" href=\"/User/logout\" role=\"button\">Log OUT</a>
+    ";
+        } else {
+            // line 42
+            echo "        <a class=\"btn btn-success\" href=\"/User/login\" role=\"button\">Log IN</a>
+    ";
+        }
+        // line 44
+        echo "</nav>
 
 <div class=\"container\">
 
     ";
-        // line 44
+        // line 48
         $this->displayBlock('body', $context, $blocks);
-        // line 45
+        // line 49
         echo "</div>
 
 <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4\" crossorigin=\"anonymous\"></script>
@@ -99,9 +110,9 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
 <script src=\"/assets/js/script.js\"></script>
 
 ";
-        // line 52
+        // line 56
         $this->displayBlock('javascript', $context, $blocks);
-        // line 53
+        // line 57
         echo "
 </body>
 </html>
@@ -121,13 +132,13 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
         $macros = $this->macros;
     }
 
-    // line 44
+    // line 48
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 52
+    // line 56
     public function block_javascript($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -144,9 +155,17 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
     /**
      * @codeCoverageIgnore
      */
+    public function isTraitable()
+    {
+        return false;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
     public function getDebugInfo()
     {
-        return array (  131 => 52,  125 => 44,  119 => 13,  112 => 8,  105 => 53,  103 => 52,  94 => 45,  92 => 44,  60 => 14,  58 => 13,  50 => 8,  41 => 1,);
+        return array (  142 => 56,  136 => 48,  130 => 13,  123 => 8,  116 => 57,  114 => 56,  105 => 49,  103 => 48,  97 => 44,  93 => 42,  89 => 40,  87 => 39,  60 => 14,  58 => 13,  50 => 8,  41 => 1,);
     }
 
     public function getSourceContext()
@@ -189,7 +208,11 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
     <form class=\"d-flex\">
         <input class=\"form-control me-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\" id=\"Search\">
     </form>
-
+    {% if session.login is defined %}
+        <a class=\"btn btn-danger\" href=\"/User/logout\" role=\"button\">Log OUT</a>
+    {% else %}
+        <a class=\"btn btn-success\" href=\"/User/login\" role=\"button\">Log IN</a>
+    {% endif %}
 </nav>
 
 <div class=\"container\">
