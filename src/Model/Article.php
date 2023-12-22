@@ -159,7 +159,7 @@ class Article implements \JsonSerializable {
 
         $articleSql = $requete->fetch(\PDO::FETCH_ASSOC);
         $article = new Article();
-        $article->setTitre($articleSql["Titre"])
+        $article->setTitre($articleSql["Titretest"])
             ->setDescription($articleSql["Description"])
             ->setDatePublication(new \DateTime($articleSql["DatePublication"]))
             ->setAuteur($articleSql["Auteur"])
