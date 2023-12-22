@@ -13,16 +13,22 @@ class AdminArticleController extends AbstractController
         UserController::haveGoodRole(["Admin"]);
         // Requete SQL
         $articles = Article::SqlGetAll();
+        //Token CSRF
+        $token = bin2hex(random_bytes(32));
+        $_SESSION["token"] = $token;
         // La vue
         return $this->twig->render("Admin/Article/list.html.twig",[
-            "articles" => $articles
+            "articles" => $articles,
+            "token" => $token
         ]);
     }
 
-    public function delete(int $idArticle)
+    public function delete()
     {
-        //Requete
-        Article::SqlDelete($idArticle);
+        if($_SESSION["token"] == $_POST["token"]){
+            //Requete
+            Article::SqlDelete($_POST["id"]);
+        }
         // Rediriger la personne
         header("Location:/AdminArticle/list");
     }

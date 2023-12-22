@@ -38,7 +38,7 @@ class ArticleController extends AbstractController
 
 
         $mpdf->Output("{$_SERVER["DOCUMENT_ROOT"]}/uploads/pdf/Article-{$article->getId()}.pdf", Destination::FILE);
-
+        header("Location:/Article/show/{$article->getId()}");
     }
     public function fixtures()
     {
