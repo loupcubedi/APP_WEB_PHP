@@ -13,9 +13,6 @@ class AdminDonDuSangController extends AbstractController
         // Requête SQL pour obtenir tous les dons du sang
         $donsDuSang = DonDuSang::SqlGetAll();
 
-
-
-        // Token CSRF
         $token = bin2hex(random_bytes(32));
         $_SESSION["token"] = $token;
 
@@ -105,7 +102,12 @@ class AdminDonDuSangController extends AbstractController
         // Créer une variable Datetime (date du jour)
         $dateDuJour = new \DateTime();
 
-        // Boucle de 200 itérations
+        $latitudeMin = 43.0; // Latitude minimale pour la France
+        $latitudeMax = 49.1; // Latitude maximale pour la France
+        $longitudeMin = -1.142; // Longitude minimale pour la France (point le plus à l'ouest)
+        $longitudeMax = 6.561; // Longitude maximale pour la France (point le plus à l'est)
+
+// Boucle de 200 itérations
         for ($i = 1; $i <= 200; $i++) {
             $dateDuJour->modify("+1 day");
             shuffle($arrayTitre);
@@ -114,6 +116,9 @@ class AdminDonDuSangController extends AbstractController
             $nomContact = $arrayNomsContact[array_rand($arrayNomsContact)];
             $nomAssociation = $arrayNomassociation[array_rand($arrayNomassociation)];
 
+            // Générer des latitudes et des longitudes aléatoires pour la France
+            $latitude = mt_rand($latitudeMin * 1000, $latitudeMax * 1000) / 1000; // Latitudes entre 41.0 et 51.1
+            $longitude = mt_rand($longitudeMin * 1000, $longitudeMax * 1000) / 1000; // Longitudes entre -5.142 et 9.561
 
             // Générer un prix aléatoire entre 1 et 50
             $prixAleatoire = mt_rand(1, 50);
@@ -124,7 +129,9 @@ class AdminDonDuSangController extends AbstractController
                 ->setNom($nomAssociation)
                 ->setNomContact($nomContact)
                 ->setDateEvenement($dateDuJour)
-                ->setPrix($prixAleatoire); // Utiliser le prix aléatoire
+                ->setPrix($prixAleatoire)
+                ->setLatitude($latitude) // Définir la latitude aléatoire en France
+                ->setLongitude($longitude); // Définir la longitude aléatoire en France
 
             DonDuSang::SqlAdd($dondusang);
         }

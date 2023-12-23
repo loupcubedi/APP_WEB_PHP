@@ -40,7 +40,7 @@ if($controller != ''){
         echo $controller->showMessage($e);
     }
 }else{
-    $controller = new \src\Controller\ArticleController();
+    $controller = new \src\Controller\DonDuSangController();
     echo $controller->index();
 }
 

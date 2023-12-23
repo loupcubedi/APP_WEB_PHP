@@ -48,7 +48,7 @@ class __TwigTemplate_aab77d265086abd0f440a509a63708a8 extends Template
     {
         $macros = $this->macros;
         $this->displayParentBlock("title", $context, $blocks);
-        echo " - Nos derniers articles";
+        echo " - Carte OpenStreetMap";
     }
 
     // line 5
@@ -56,24 +56,39 @@ class __TwigTemplate_aab77d265086abd0f440a509a63708a8 extends Template
     {
         $macros = $this->macros;
         // line 6
-        echo "    <h1>Voici les 20 derniers articles</h1>
-    <ul>
-        ";
-        // line 8
-        $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(($context["articles"] ?? null));
-        foreach ($context['_seq'] as $context["_key"] => $context["article"]) {
-            // line 9
-            echo "            <li>";
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["article"], "Titre", [], "any", false, false, false, 9), "html", null, true);
-            echo "</li>
-        ";
-        }
-        $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['article'], $context['_parent'], $context['loop']);
-        $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 11
-        echo "    </ul>
+        echo "    <h1>Carte OpenStreetMap</h1>
+    <div id=\"map\" style=\"height: 700px;\"></div>
+
+    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.css\" />
+    <script src=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.js\"></script>
+
+    <script>
+        // Supposons que ";
+        // line 13
+        echo json_encode(($context["donsDuSang"] ?? null));
+        echo " renvoie un tableau d'objets JSON.
+        var donsDuSang = ";
+        // line 14
+        echo json_encode(($context["donsDuSang"] ?? null));
+        echo ";
+
+        console.log(donsDuSang);
+
+        // Créez une carte Leaflet et centrez-la sur la France
+        var map = L.map('map').setView([46.603354, 1.888334], 6); // Coordonnées du centre de la France et niveau de zoom
+
+        // Ajoutez une couche de tuiles OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Itérer sur le tableau d'objets JSON pour ajouter des marqueurs à la carte
+        donsDuSang.forEach(function(don) {
+            if (don.latitude && don.longitude) {
+                L.marker([don.latitude, don.longitude]).addTo(map);
+            }
+        });
+    </script>
 ";
     }
 
@@ -98,22 +113,44 @@ class __TwigTemplate_aab77d265086abd0f440a509a63708a8 extends Template
      */
     public function getDebugInfo()
     {
-        return array (  76 => 11,  67 => 9,  63 => 8,  59 => 6,  55 => 5,  47 => 3,  36 => 1,);
+        return array (  72 => 14,  68 => 13,  59 => 6,  55 => 5,  47 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
     {
         return new Source("{% extends \"base.html.twig\" %}
 
-{% block title%}{{ parent() }} - Nos derniers articles{% endblock %}
+{% block title %}{{ parent() }} - Carte OpenStreetMap{% endblock %}
 
 {% block body %}
-    <h1>Voici les 20 derniers articles</h1>
-    <ul>
-        {% for article in articles %}
-            <li>{{ article.Titre }}</li>
-        {% endfor %}
-    </ul>
-{% endblock %}", "Article/index.html.twig", "/var/www/html/src/View/Article/index.html.twig");
+    <h1>Carte OpenStreetMap</h1>
+    <div id=\"map\" style=\"height: 700px;\"></div>
+
+    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.css\" />
+    <script src=\"https://unpkg.com/leaflet@1.7.1/dist/leaflet.js\"></script>
+
+    <script>
+        // Supposons que {{ donsDuSang|json_encode|raw }} renvoie un tableau d'objets JSON.
+        var donsDuSang = {{ donsDuSang|json_encode|raw }};
+
+        console.log(donsDuSang);
+
+        // Créez une carte Leaflet et centrez-la sur la France
+        var map = L.map('map').setView([46.603354, 1.888334], 6); // Coordonnées du centre de la France et niveau de zoom
+
+        // Ajoutez une couche de tuiles OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Itérer sur le tableau d'objets JSON pour ajouter des marqueurs à la carte
+        donsDuSang.forEach(function(don) {
+            if (don.latitude && don.longitude) {
+                L.marker([don.latitude, don.longitude]).addTo(map);
+            }
+        });
+    </script>
+{% endblock %}
+", "Article/index.html.twig", "/var/www/html/src/View/Article/index.html.twig");
     }
 }

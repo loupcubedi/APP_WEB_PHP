@@ -66,7 +66,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
     <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
         <ul class=\"navbar-nav mr-auto\">
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/\">Accueil</a>
+                <a class=\"nav-link\" href=\"/\">Carte des dons du sang</a>
             </li>
             <li class=\"nav-item\">
                 <a class=\"nav-link\" href=\"/AdminDonDuSang/list\">Liste des dons du sang</a>
@@ -192,7 +192,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
     <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
         <ul class=\"navbar-nav mr-auto\">
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/\">Accueil</a>
+                <a class=\"nav-link\" href=\"/\">Carte des dons du sang</a>
             </li>
             <li class=\"nav-item\">
                 <a class=\"nav-link\" href=\"/AdminDonDuSang/list\">Liste des dons du sang</a>

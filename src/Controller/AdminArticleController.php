@@ -13,6 +13,8 @@ class AdminArticleController extends AbstractController
        // UserController::haveGoodRole(["Admin"]);
         // Requete SQL
         $articles = Article::SqlGetAll();
+        var_dump($articles);
+
         //Token CSRF
         $token = bin2hex(random_bytes(32));
         $_SESSION["token"] = $token;
