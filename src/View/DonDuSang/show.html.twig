@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+{% block title %} Détails du Don du Sang - {{ parent() }}{% endblock %}
+{% block css %}
+    <!-- Inclure vos fichiers CSS ici si nécessaire -->
+    <style>
+        /* Ajoutez ici votre style pour centrer le titre */
+        h1 {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <h1>{{ donDuSang.nom }}</h1>
+    <p><strong>Description :</strong> {{ donDuSang.description }}</p>
+    <p><strong>Date de l'événement :</strong> {{ donDuSang.date_evenement|date("d/m/Y") }}</p>
+    <p><strong>Position :</strong> Latitude : {{ donDuSang.latitude }}, Longitude : {{ donDuSang.longitude }}</p>
+    <p><strong>Prix :</strong> {{ donDuSang.prix }} places</p>
+    <p><strong>Nom du contact :</strong> {{ donDuSang.nomContact }}</p>
+    <p><strong>Email du contact :</strong> {{ donDuSang.emailContact }}</p>
+
+    {% if donDuSang.photoUrl is defined and donDuSang.photoUrl is not empty %}
+        <p>
+            <img src="{{ donDuSang.photoUrl }}" class="img-thumbnail"/>
+        </p>
+    {% endif %}
+
+    <!-- Ajoutez ici d'autres éléments de détails si nécessaire -->
+
+    <p>
+        <!-- Ajoutez ici des boutons ou des liens pour d'autres actions si nécessaire -->
+    </p>
+{% endblock %}

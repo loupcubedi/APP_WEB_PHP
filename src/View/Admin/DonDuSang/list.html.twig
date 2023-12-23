@@ -14,16 +14,16 @@
             <th scope="col">Email Contact</th>
             <th scope="col">nom_contact</th>
             <th scope="col">Places restantes</th>
+            <th scope="col">Détails</th>
+            <th scope="col">Supprimer</th>
 
-            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
         {% if donsDuSang is empty %}
             <tr>
-                <td colspan="5">Aucun don du sang trouvé.</td>
+                <td colspan="6">Aucun don du sang trouvé.</td>
             </tr>
-
         {% else %}
             {% for don in donsDuSang %}
                 <tr>
@@ -35,11 +35,18 @@
                     <td>{{ don.prix }} places</td>
 
                     <td>
+                        <a href="/AdminDonDuSang/details/{{ don.id }}" class="btn btn-info"><i class="bi bi-eye"></i></a>
+                    </td>
+
+                    <td>
                         <form method="post" action="/AdminDonDuSang/delete">
                             <input type="hidden" name="id" value="{{ don.id }}">
                             <input type="hidden" name="token" value="{{ token }}">
-                            <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>                        </form>
+                            <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                        </form>
                     </td>
+
+
                 </tr>
             {% endfor %}
         {% endif %}

@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block title %}ADMIN - {{ parent() }} - Ajout d'un Don du Sang{% endblock %}
+
+{% block body %}
+    <h1>Ajout Don du Sang</h1>
+
+    <form method="post">
+
+        <div class="mb-3">
+            <label for="Nom">Nom de l'Association</label>
+            <select class="form-select" name="Nom" id="Nom">
+                <option value="Croix rouge">Croix rouge</option>
+                <option value="EFS">EFS</option>
+                <option value="Don de Sang pour la Vie">Don de Sang pour la Vie</option>
+                <option value="Don du Sang Bénévole">Don du Sang Bénévole</option>
+                <option value="Solidarité Don de Sang">Solidarité Don de Sang</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Description" name="Description">
+        </div>
+
+        <div class="mb-3">
+            <input type="date" class="form-control" name="DateEvenement">
+        </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Email Contact" name="EmailContact">
+        </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Nom du Contact" name="NomContact">
+        </div>
+
+        <div class="mb-3">
+            <input type="number" class="form-control" placeholder="Prix" name="Prix">
+        </div>
+
+        <div class="mb-3">
+            <input type="number" class="form-control" placeholder="Latitude" name="Latitude">
+        </div>
+
+        <div class="mb-3">
+            <input type="number" class="form-control" placeholder="Longitude" name="Longitude">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Valider</button>
+    </form>
+{% endblock %}

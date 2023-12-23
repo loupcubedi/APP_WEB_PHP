@@ -37,9 +37,40 @@ class AdminDonDuSangController extends AbstractController
     // Ajoute un nouveau don du sang
     public function add()
     {
-        // Ici, tu peux ajouter la logique pour le traitement du formulaire d'ajout
-        // et l'insertion d'un nouveau don du sang dans la base de données.
+        if (isset($_POST["Nom"])) {
+            $donDuSang = new DonDuSang();
+
+            // Récupérer les données du formulaire
+            $nom = $_POST["Nom"];
+            $description = $_POST["Description"];
+            $dateEvenement = new \DateTime($_POST["DateEvenement"]);
+            $emailContact = $_POST["EmailContact"];
+            $nomContact = $_POST["NomContact"];
+            $prix = $_POST["Prix"];
+            $latitude = floatval($_POST["Latitude"]);
+            $longitude = floatval($_POST["Longitude"]);
+
+            // Mettre à jour les propriétés du don du sang
+            $donDuSang->setNom($nom)
+                ->setDescription($description)
+                ->setDateEvenement($dateEvenement)
+                ->setEmailContact($emailContact)
+                ->setNomContact($nomContact)
+                ->setPrix($prix)
+                ->setLatitude($latitude)
+                ->setLongitude($longitude);
+
+            // Ajouter le don du sang à la base de données
+            DonDuSang::SqlAdd($donDuSang);
+
+            // Rediriger l'utilisateur vers la liste des dons après l'ajout
+            header("Location:/AdminDonDuSang/list");
+            exit();
+        } else {
+            return $this->twig->render("Admin/DonDuSang/add.html.twig");
+        }
     }
+
 
     // Met à jour un don du sang
     public function update(int $id)
@@ -84,7 +115,20 @@ class AdminDonDuSangController extends AbstractController
         }
     }
 
+    public function details(int $id)
+    {
+        // Récupérez les détails du don du sang en fonction de l'ID (utilisez votre propre méthode)
+        $donDuSang = DonDuSang::SqlGetById($id);
 
+        if (!$donDuSang) {
+            throw $this->createNotFoundException('Don du sang non trouvé.');
+        }
+
+        // Affichez la vue pour les détails du don du sang
+        return $this->twig->render("DonDuSang/show.html.twig", [
+            'donDuSang' => $donDuSang,
+        ]);
+    }
 
     public function fixtures()
     {

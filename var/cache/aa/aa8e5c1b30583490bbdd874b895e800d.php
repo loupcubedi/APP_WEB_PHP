@@ -72,7 +72,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
                 <a class=\"nav-link\" href=\"/AdminDonDuSang/list\">Liste des dons du sang</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/AdminArticle/add\">Admin Add</a>
+                <a class=\"nav-link\" href=\"/AdminDonDuSang/add\">Ajouter un événement</a>
             </li>
             <li class=\"nav-item\">
                 <a class=\"nav-link\" href=\"/AdminDonDuSang/fixtures\">Génération de données (Fixtures)</a>
@@ -198,7 +198,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
                 <a class=\"nav-link\" href=\"/AdminDonDuSang/list\">Liste des dons du sang</a>
             </li>
             <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"/AdminArticle/add\">Admin Add</a>
+                <a class=\"nav-link\" href=\"/AdminDonDuSang/add\">Ajouter un événement</a>
             </li>
             <li class=\"nav-item\">
                 <a class=\"nav-link\" href=\"/AdminDonDuSang/fixtures\">Génération de données (Fixtures)</a>
