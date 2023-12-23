@@ -16,6 +16,8 @@ class DonDuSang implements \JsonSerializable {
     private ?string $nom_contact = null;
     private ?string $email_contact = null;
     private ?string $photo_url = null;
+    private ?string $image_repository = null;
+    private ?string $image_filename = null;
 
     // Getters
     public function getId(): ?int {
@@ -108,6 +110,25 @@ class DonDuSang implements \JsonSerializable {
 
     public function setPhotoUrl(?string $photo_url): DonDuSang {
         $this->photo_url = $photo_url;
+        return $this;
+    }
+
+    public function getImageRepository(): ?string {
+        return $this->image_repository;
+    }
+
+    public function setImageRepository(?string $image_repository): DonDuSang {
+        $this->image_repository = $image_repository;
+        return $this;
+    }
+
+    // Getter et setter pour image_filename
+    public function getImageFileName(): ?string {
+        return $this->image_filename;
+    }
+
+    public function setImageFileName(?string $image_filename): DonDuSang {
+        $this->image_filename = $image_filename;
         return $this;
     }
 

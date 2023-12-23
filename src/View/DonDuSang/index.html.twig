@@ -1,9 +1,11 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ parent() }} - Carte OpenStreetMap{% endblock %}
+{% block title %}{{ parent() }} - Carte des dons du sang disponible en France{% endblock %}
 
 {% block body %}
-    <h1>Carte OpenStreetMap</h1>
+    <div style="text-align: center;"> <!-- Ajoutez ceci pour centrer le titre -->
+        <h1>Carte des dons du sang disponible en France</h1>
+    </div>
     <div id="map" style="height: 700px;"></div>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />

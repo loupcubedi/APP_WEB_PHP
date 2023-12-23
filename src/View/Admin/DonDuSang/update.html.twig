@@ -42,15 +42,12 @@
             <input type="file" class="custom-file-input" name="Image">
         </div>
 
-        {% if file_exist( './uploads/images/'~article.ImageRepository~'/'~article.ImageFileName ) and article.ImageFileName !="" %}
+        {% if file_exist('./uploads/images/'~don.photoUrl) and don.photoUrl != "" %}
             <p>Image Actuelle :</p>
             <p>
-                <img src="/uploads/images/{{ article.ImageRepository }}/{{ article.ImageFileName }}" class="img-thumbnail"/>
+                <img src="/uploads/images/{{ don.photoUrl }}" class="img-thumbnail"/>
             </p>
-            <input type="hidden" name="ImageRepository" value="{{ article.ImageRepository }}">
-            <input type="hidden" name="ImageFileName" value="{{ article.ImageFileName }}">
         {% endif %}
-
 
         <button type="submit" class="btn btn-primary">Valider</button>
     </form>
