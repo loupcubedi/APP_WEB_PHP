@@ -17,4 +17,13 @@ class DonDuSangController  extends AbstractController
             "donsDuSang" => $donsDuSang
         ]);
     }
+
+    public function apiGetAll()
+    {
+        $donsDuSang = DonDuSang::SqlGetAll();
+        header('Content-Type: application/json');
+        echo json_encode($donsDuSang);
+        exit;
+    }
+
 }

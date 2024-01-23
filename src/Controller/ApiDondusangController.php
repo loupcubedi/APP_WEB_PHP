@@ -1,11 +1,10 @@
 <?php
 
 namespace src\Controller;
-
-use src\Model\Article;
+use src\Model\DonDuSang;
 use src\Service\JwtService;
 
-class ApiArticleController
+class ApiDondusangController
 {
     public function __construct()
     {
@@ -14,6 +13,7 @@ class ApiArticleController
 
     public function getAll()
     {
+        echo "test";
         if($_SERVER["REQUEST_METHOD"] != "GET"){
             header("HTTP/1.1 405 Method Not Allowed");
             return json_encode([
@@ -30,8 +30,8 @@ class ApiArticleController
             return json_encode("Vous n'avez pa le bon role");
         }
 
-        $article = Article::SqlGetAll();
-        return json_encode($article);
+        $donsDuSang = DonDuSang::SqlGetAll();
+        return json_encode($donsDuSang);
 
     }
 
@@ -89,17 +89,17 @@ class ApiArticleController
         }
 
 
-        $article = new Article();
-        $article->setTitre($json->Titre)
+        $donsDuSang = new DonDuSang();
+        $donsDuSang->setTitre($json->Titre)
             ->setDescription($json->Description)
             ->setDatePublication(new \DateTime($json->DatePublication))
             ->setImageRepository($sqlRepository)
             ->setImageFileName($nomImage)
             ->setAuteur($json->Auteur);
-        $id = Article::SqlAdd($article);
+        $id = DonDuSang::SqlAdd($donsDuSang);
         return json_encode([
             "code" => 0,
-            "Message" => "Article ajouté avec succès",
+            "Message" => "Don du sang ajouté avec succès",
             "Id" => $id
         ]);
     }
@@ -130,8 +130,8 @@ class ApiArticleController
         }
 
 
-        $articles = Article::SqlSearch($json->keyword);
-        return json_encode($articles);
+        $donsDuSang = DonDuSang::SqlSearch($json->keyword);
+        return json_encode($donsDuSang);
     }
 
 }
