@@ -17,6 +17,11 @@
     <p><strong>Prix :</strong> {{ donDuSang.prix }} places</p>
     <p><strong>Nom du contact :</strong> {{ donDuSang.nomContact }}</p>
     <p><strong>Email du contact :</strong> {{ donDuSang.emailContact }}</p>
+    <p>
+
+        <a href="/DonDuSang/pdf/{{ donDuSang.id }}" class="btn btn-primary">Exporter en PDF</a>
+
+    </p>
 
     {% if donDuSang.photoUrl is defined and donDuSang.photoUrl is not empty %}
         <p>

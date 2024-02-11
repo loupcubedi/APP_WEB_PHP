@@ -26,4 +26,26 @@ class DonDuSangController  extends AbstractController
         exit;
     }
 
+    public function pdf(int $id)
+    {
+        // Récupérer les détails du don du sang spécifique par ID
+        $donDuSang = DonDuSang::SqlGetById($id);
+
+        // Création d'une nouvelle instance de Mpdf
+        $mpdf = new Mpdf([
+            "tempDir" => $_SERVER["DOCUMENT_ROOT"]."/../var/cache/pdf" // Assurez-vous que ce chemin est correct et accessible en écriture
+        ]);
+
+        // Générer le HTML à partir de la vue Twig spécifique pour le PDF
+        $html = $this->twig->render('DonDuSang/pdf.html.twig', [
+            'donDuSang' => $donDuSang
+        ]);
+
+        // Écrire le HTML dans le document PDF
+        $mpdf->WriteHTML($html);
+
+        // Output du PDF dans le navigateur (I pour inline)
+        $mpdf->Output("dondusang-$id.pdf", 'I');
+    }
+
 }

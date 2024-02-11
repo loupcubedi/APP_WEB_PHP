@@ -108,6 +108,7 @@ class DonDuSang implements \JsonSerializable {
         return $this;
     }
 
+
     public function setPhotoUrl(?string $photo_url): DonDuSang {
         $this->photo_url = $photo_url;
         return $this;

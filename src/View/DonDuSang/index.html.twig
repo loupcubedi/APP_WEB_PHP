@@ -23,10 +23,8 @@
             attribution: '&copy; ... contributors'
         }).addTo(map);
 
-        // Limiter à 30 les marqueurs sur la carte
         var limitedDonsDuSang = donsDuSang.slice(0, 30);
 
-        // Itérer sur le tableau limité pour ajouter des marqueurs et une popup
         limitedDonsDuSang.forEach(function(don) {
             if (don.latitude && don.longitude) {
                 var marker = L.marker([don.latitude, don.longitude]).addTo(map);
