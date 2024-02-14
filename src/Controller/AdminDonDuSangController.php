@@ -37,6 +37,10 @@ class AdminDonDuSangController extends AbstractController
     // Ajoute un nouveau don du sang
     public function add()
     {
+        // Déclarer la variable $sqlRepository et $nomImage
+        $sqlRepository = null;
+        $nomImage = null;
+
         if (isset($_POST["Nom"])) {
             $donDuSang = new DonDuSang();
 
@@ -50,6 +54,27 @@ class AdminDonDuSangController extends AbstractController
             $latitude = floatval($_POST["Latitude"]);
             $longitude = floatval($_POST["Longitude"]);
 
+            if (isset($_FILES['Photo']) && $_FILES['Photo']['error'] == 0) {
+                $tmpName = $_FILES['Photo']['tmp_name'];
+                $name = basename($_FILES['Photo']['name']);
+                $dateNow = new \DateTime();
+                $sqlRepository = $dateNow->format("Y/m");
+                $repository = "{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$sqlRepository}";
+                if (!is_dir($repository)) {
+                    mkdir($repository, 0777, true);
+                }
+                $uploadFile = $repository . '/' . $name;
+                if (move_uploaded_file($tmpName, $uploadFile)) {
+                    $nomImage = $name;
+                } else {
+                    header("HTTP/1.1 500 Internal Server Error");
+                    return json_encode([
+                        "code" => 1,
+                        "Message" => "Erreur lors de l'upload de l'image"
+                    ]);
+                }
+            }
+
             // Mettre à jour les propriétés du don du sang
             $donDuSang->setNom($nom)
                 ->setDescription($description)
@@ -58,7 +83,9 @@ class AdminDonDuSangController extends AbstractController
                 ->setNomContact($nomContact)
                 ->setPrix($prix)
                 ->setLatitude($latitude)
-                ->setLongitude($longitude);
+                ->setLongitude($longitude)
+                ->setImageRepository($sqlRepository) // Définir le répertoire de l'image
+                ->setImageFileName($nomImage); // Définir le nom de l'image
 
             // Ajouter le don du sang à la base de données
             DonDuSang::SqlAdd($donDuSang);
@@ -70,6 +97,8 @@ class AdminDonDuSangController extends AbstractController
             return $this->twig->render("Admin/DonDuSang/add.html.twig");
         }
     }
+
+
 
 
     // Met à jour un don du sang

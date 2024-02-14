@@ -152,9 +152,10 @@ class DonDuSang implements \JsonSerializable {
     // ... (les autres parties de la classe restent inchangées)
 
 // Méthode pour ajouter un nouveau lieu de don du sang dans la base de données
+    // Méthode pour ajouter un nouveau lieu de don du sang dans la base de données
     public static function SqlAdd(DonDuSang $donDuSang): int {
         $bdd = BDD::getInstance();
-        $requete = $bdd->prepare("INSERT INTO dons_du_sang (nom, description, date_evenement, prix, latitude, longitude, nom_contact, email_contact, photo_url) VALUES (:nom, :description, :date_evenement, :prix, :latitude, :longitude, :nom_contact, :email_contact, :photo_url)");
+        $requete = $bdd->prepare("INSERT INTO dons_du_sang (nom, description, date_evenement, prix, latitude, longitude, nom_contact, email_contact, photo_url, image_repository, image_filename) VALUES (:nom, :description, :date_evenement, :prix, :latitude, :longitude, :nom_contact, :email_contact, :photo_url, :image_repository, :image_filename)");
 
         $requete->execute([
             "nom" => $donDuSang->getNom(),
@@ -165,11 +166,14 @@ class DonDuSang implements \JsonSerializable {
             "longitude" => $donDuSang->getLongitude(),
             "nom_contact" => $donDuSang->getNomContact(),
             "email_contact" => $donDuSang->getEmailContact(),
-            "photo_url" => $donDuSang->getPhotoUrl()
+            "photo_url" => $donDuSang->getPhotoUrl(),
+            "image_repository" => $donDuSang->getImageRepository(), // Ajouter image_repository
+            "image_filename" => $donDuSang->getImageFileName() // Ajouter image_filename
         ]);
 
         return $bdd->lastInsertId();
     }
+
 
 // Méthode pour obtenir tous les lieux de don du sang de la base de données
     public static function SqlGetAll() {

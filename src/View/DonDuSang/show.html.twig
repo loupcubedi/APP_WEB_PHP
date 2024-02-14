@@ -21,17 +21,12 @@
 
         <a href="/DonDuSang/pdf/{{ donDuSang.id }}" class="btn btn-primary">Exporter en PDF</a>
 
-    </p>
-
-    {% if donDuSang.photoUrl is defined and donDuSang.photoUrl is not empty %}
-        <p>
-            <img src="{{ donDuSang.photoUrl }}" class="img-thumbnail"/>
-        </p>
+    <<p>
+    {% if file_exist('./uploads/images/' ~ DonDuSang.imageRepository ~ '/' ~ DonDuSang.imageFileName) and DonDuSang.imageFileName != "" %}
+        <img src="/uploads/images/{{ DonDuSang.imageRepository }}/{{ DonDuSang.imageFileName }}" class="img-thumbnail"/>
     {% endif %}
+</p>
 
-    <!-- Ajoutez ici d'autres éléments de détails si nécessaire -->
-
-    <p>
-        <!-- Ajoutez ici des boutons ou des liens pour d'autres actions si nécessaire -->
+    <!-- Ajoutez ici des boutons ou des liens pour d'autres actions si nécessaire -->
     </p>
 {% endblock %}
