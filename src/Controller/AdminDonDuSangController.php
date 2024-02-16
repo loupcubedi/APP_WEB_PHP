@@ -27,6 +27,7 @@ class AdminDonDuSangController extends AbstractController
     // Supprime un don du sang
     public function delete()
     {
+        UserController::haveGoodRole(["Administrateur"]);
         if ($_SESSION["token"] == $_POST["token"]) {
             DonDuSang::SqlDelete($_POST["id"]);
         }
@@ -37,7 +38,8 @@ class AdminDonDuSangController extends AbstractController
     // Ajoute un nouveau don du sang
     public function add()
     {
-        // Déclarer la variable $sqlRepository et $nomImage
+        UserController::haveGoodRole(["Administrateur"]);
+
         $sqlRepository = null;
         $nomImage = null;
 
@@ -103,7 +105,10 @@ class AdminDonDuSangController extends AbstractController
 
     // Met à jour un don du sang
     public function update(int $id)
+
     {
+        UserController::haveGoodRole(["Administrateur"]);
+
         $donDuSang = DonDuSang::SqlGetById($id);
 
         if (isset($_POST["Nom"])) {

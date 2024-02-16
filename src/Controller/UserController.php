@@ -35,7 +35,7 @@ class UserController extends AbstractController
                         "Email" => $user->getMail(),
                         "Roles" => $user->getRoles()
                     ];
-                    header("Location:/AdminArticle/list");
+                    header("Location:/AdminDonDuSang/list");
                 }else{
                     throw new \Exception("Mot de passe incorrect pour {$_POST["mail"]}");
                 }

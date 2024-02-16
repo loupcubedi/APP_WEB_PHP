@@ -260,6 +260,7 @@ class DonDuSang implements \JsonSerializable {
 
 // Méthode pour supprimer un lieu de don du sang de la base de données
     public static function SqlDelete(int $id): bool {
+
         $bdd = BDD::getInstance();
         $requete = $bdd->prepare("DELETE FROM dons_du_sang WHERE id = :id");
         $requete->execute(["id" => $id]);
