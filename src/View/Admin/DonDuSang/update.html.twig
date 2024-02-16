@@ -4,7 +4,7 @@
 {% block body %}
     <h1>Update Don du Sang</h1>
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
 
         <div class="mb-3">
             <input type="text" class="form-control" placeholder="Nom" name="Nom" value="{{ don.nom }}">
@@ -39,13 +39,14 @@
         </div>
 
         <div class="mb-3">
-            <input type="file" class="custom-file-input" name="Image">
+            <label for="Photo">Télécharger une nouvelle photo</label>
+            <input type="file" class="form-control" name="Photo" id="Photo">
         </div>
 
-        {% if file_exist('./uploads/images/'~don.photoUrl) and don.photoUrl != "" %}
+        {% if don.imageRepository is not null and don.imageFileName is not null %}
             <p>Image Actuelle :</p>
             <p>
-                <img src="/uploads/images/{{ don.photoUrl }}" class="img-thumbnail"/>
+                <img src="/uploads/images/{{ don.imageRepository }}/{{ don.imageFileName }}" class="img-thumbnail"/>
             </p>
         {% endif %}
 

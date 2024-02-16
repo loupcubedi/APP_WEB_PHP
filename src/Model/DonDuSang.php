@@ -237,7 +237,7 @@ class DonDuSang implements \JsonSerializable {
 // Méthode pour mettre à jour un lieu de don du sang dans la base de données
     public static function SqlUpdate(DonDuSang $donDuSang): bool {
         $bdd = BDD::getInstance();
-        $requete = $bdd->prepare("UPDATE dons_du_sang SET nom = :nom, description = :description, date_evenement = :date_evenement, prix = :prix, latitude = :latitude, longitude = :longitude, nom_contact = :nom_contact, email_contact = :email_contact, photo_url = :photo_url WHERE id = :id");
+        $requete = $bdd->prepare("UPDATE dons_du_sang SET nom = :nom, description = :description, date_evenement = :date_evenement, prix = :prix, latitude = :latitude, longitude = :longitude, nom_contact = :nom_contact, email_contact = :email_contact, photo_url = :photo_url, image_repository = :image_repository, image_filename = :image_filename  WHERE id = :id");
 
         $result = $requete->execute([
             "id" => $donDuSang->getId(),
@@ -249,7 +249,9 @@ class DonDuSang implements \JsonSerializable {
             "longitude" => $donDuSang->getLongitude(),
             "nom_contact" => $donDuSang->getNomContact(),
             "email_contact" => $donDuSang->getEmailContact(),
-            "photo_url" => $donDuSang->getPhotoUrl()
+            "photo_url" => $donDuSang->getPhotoUrl(),
+            "image_repository" => $donDuSang->getImageRepository(), // Ajouter image_repository
+            "image_filename" => $donDuSang->getImageFileName() // Ajouter image_filename
         ]);
 
         return $result;

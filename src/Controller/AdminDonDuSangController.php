@@ -104,45 +104,77 @@ class AdminDonDuSangController extends AbstractController
     // Met à jour un don du sang
     public function update(int $id)
     {
-        // Récupérer le don du sang à mettre à jour
         $donDuSang = DonDuSang::SqlGetById($id);
 
-        // Vérifier si le formulaire a été soumis
         if (isset($_POST["Nom"])) {
-            // Récupérer les données du formulaire
-            $nom = $_POST["Nom"];
-            $description = $_POST["Description"];
-            $dateEvenement = new \DateTime($_POST["DateEvenement"]);
-            $emailContact = $_POST["EmailContact"]; // Ajout de la récupération de l'email
-            $nomContact = $_POST["NomContact"]; // Ajout de la récupération du nom du contact
-            $prix = $_POST["Prix"];
-            $latitude = floatval($_POST["Latitude"]); // Conversion en float
-            $longitude = floatval($_POST["Longitude"]); // Conversion en float
+            $sqlRepository = $donDuSang->getImageRepository(); // Utiliser l'ancien répertoire si aucun fichier n'est uploadé
+            $nomImage = $donDuSang->getImageFileName(); // Utiliser l'ancien nom de fichier si aucun fichier n'est uploadé
 
-            // Mettre à jour les propriétés du don du sang
-            $donDuSang->setNom($nom)
-                ->setDescription($description)
-                ->setDateEvenement($dateEvenement)
-                ->setEmailContact($emailContact) // Mise à jour de l'email
-                ->setNomContact($nomContact) // Mise à jour du nom du contact
-                ->setPrix($prix)
-                ->setLatitude($latitude)
-                ->setLongitude($longitude);
+            if (isset($_FILES["Photo"]) && $_FILES["Photo"]["error"] == 0) {
+                $extensionsAutorisee = ["jpg", "jpeg", "png"];
+                $extension = pathinfo($_FILES["Photo"]["name"], PATHINFO_EXTENSION);
 
-            // Mettre à jour le don du sang dans la base de données
+                if (in_array($extension, $extensionsAutorisee)) {
+                    // Suppression de l'ancienne image si elle existe
+                    $oldImagePath = $_SERVER["DOCUMENT_ROOT"]."/uploads/images/".$sqlRepository."/".$nomImage;
+                    if ($nomImage && file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+
+                    // Création du nouveau répertoire basé sur la date actuelle
+                    $dateNow = new \DateTime();
+                    $sqlRepository = $dateNow->format("Y/m");
+                    $repository = $_SERVER["DOCUMENT_ROOT"] . "/uploads/images/" . $sqlRepository;
+                    if (!is_dir($repository)) {
+                        mkdir($repository, 0777, true);
+                    }
+
+                    // Renommer le fichier image avec un identifiant unique
+                    $nomImage = uniqid() . "." . $extension;
+
+                    // Déplacer le fichier uploadé dans le nouveau répertoire
+                    if (!move_uploaded_file($_FILES["Photo"]["tmp_name"], $repository . "/" . $nomImage)) {
+                        // En cas d'erreur lors de l'upload, afficher un message ou effectuer une action spécifique
+                        // Par exemple, renvoyer à la page de formulaire avec un message d'erreur
+                        return $this->twig->render("Admin/DonDuSang/update.html.twig", [
+                            "don" => $donDuSang,
+                            "error" => "Problème lors de l'upload de l'image."
+                        ]);
+                    }
+                }
+            }
+
+            // Mise à jour des propriétés de l'objet DonDuSang avec les nouvelles données
+            $donDuSang->setNom($_POST["Nom"])
+                ->setDescription($_POST["Description"])
+                ->setDateEvenement(new \DateTime($_POST["DateEvenement"]))
+                ->setEmailContact($_POST["EmailContact"])
+                ->setNomContact($_POST["NomContact"])
+                ->setPrix($_POST["Prix"])
+                ->setLatitude(floatval($_POST["Latitude"]))
+                ->setLongitude(floatval($_POST["Longitude"]))
+                ->setImageRepository($sqlRepository)
+                ->setImageFileName($nomImage);
+
+            // Sauvegarder les modifications dans la base de données
             DonDuSang::SqlUpdate($donDuSang);
 
-            // Rediriger l'utilisateur vers la liste des dons après la mise à jour
+            // Rediriger l'utilisateur vers la liste des dons du sang après la mise à jour
             header("Location:/AdminDonDuSang/list");
             exit();
-
         } else {
-            // Afficher le formulaire de mise à jour avec les données actuelles du don du sang
+            // Afficher à nouveau le formulaire de mise à jour avec les informations actuelles du don du sang
             return $this->twig->render("Admin/DonDuSang/update.html.twig", [
                 "don" => $donDuSang
             ]);
         }
     }
+
+
+
+
+
+
 
     public function details(int $id)
     {
