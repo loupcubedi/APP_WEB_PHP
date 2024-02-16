@@ -3,38 +3,38 @@
 {% block title %}{{ parent() }} - Carte des dons du sang disponible en France{% endblock %}
 
 {% block body %}
-    <div style="text-align: center;"> <!-- Ajoutez ceci pour centrer le titre -->
-        <h1>Cartes des dons du sang disponible en France</h1>
+    <div class="container">
+        <div style="text-align: center;">
+            <h1>Cartes des dons du sang disponible en France</h1>
+        </div>
+        <div id="map" style="height: 700px;"></div>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+        <script>
+            var donsDuSang = {{ donsDuSang|json_encode|raw }};
+            console.log(donsDuSang);
+
+            var map = L.map('map').setView([46.603354, 1.888334], 6); // Centre de la France
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; ... contributors'
+            }).addTo(map);
+
+            var limitedDonsDuSang = donsDuSang.slice(0, 30);
+
+            limitedDonsDuSang.forEach(function(don) {
+                if (don.latitude && don.longitude) {
+                    var marker = L.marker([don.latitude, don.longitude]).addTo(map);
+
+                    // Créer une popup avec un lien pour plus d'informations
+                    var popupContent = '<a href="http://www.cesi.local/AdminDonDuSang/details/' + don.id + '">Cliquez ici pour plus d\'information</a>';
+
+                    // Attacher la popup au marqueur
+                    marker.bindPopup(popupContent);
+                }
+            });
+        </script>
     </div>
-    <div id="map" style="height: 700px;"></div>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-
-
-    <script>
-        var donsDuSang = {{ donsDuSang|json_encode|raw }};
-        console.log(donsDuSang);
-
-        var map = L.map('map').setView([46.603354, 1.888334], 6); // Centre de la France
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; ... contributors'
-        }).addTo(map);
-
-        var limitedDonsDuSang = donsDuSang.slice(0, 30);
-
-        limitedDonsDuSang.forEach(function(don) {
-            if (don.latitude && don.longitude) {
-                var marker = L.marker([don.latitude, don.longitude]).addTo(map);
-
-                // Créer une popup avec un lien pour plus d'informations
-                var popupContent = '<a href="http://www.cesi.local/AdminDonDuSang/details/' + don.id + '">Cliquez ici pour plus d\'information</a>';
-
-                // Attacher la popup au marqueur
-                marker.bindPopup(popupContent);
-            }
-        });
-    </script>
 {% endblock %}
