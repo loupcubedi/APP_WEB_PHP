@@ -146,6 +146,8 @@ class DonDuSang implements \JsonSerializable {
             'nom_contact' => $this->getNomContact(),
             'email_contact' => $this->getEmailContact(),
             'photo_url' => $this->getPhotoUrl(),
+            'image_repository' => $this->getImageRepository(),
+            'image_filename' => $this->getImageFileName(),
         ];
     }
 
@@ -194,7 +196,8 @@ class DonDuSang implements \JsonSerializable {
                 ->setLongitude($donSql["longitude"])
                 ->setNomContact($donSql["nom_contact"])
                 ->setEmailContact($donSql["email_contact"])
-                ->setPhotoUrl($donSql["photo_url"]);
+                ->setImageRepository($donSql["image_repository"])
+                ->setImageFileName($donSql["image_filename"]);
             $donsDuSangObjet[] = $donDuSang;
         }
 
@@ -221,7 +224,8 @@ class DonDuSang implements \JsonSerializable {
             ->setLongitude($donDuSangData["longitude"])
             ->setNomContact($donDuSangData["nom_contact"])
             ->setEmailContact($donDuSangData["email_contact"])
-            ->setPhotoUrl($donDuSangData["photo_url"]);
+            ->setImageRepository($donDuSangData["image_repository"])
+            ->setImageFileName($donDuSangData["image_filename"]);
 
         return $donDuSang;
     }
