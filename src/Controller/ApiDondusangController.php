@@ -35,6 +35,11 @@ class ApiDondusangController
                 "Message" => "POST Attendu"
             ]);
         }
+        $result = JwtService::checkToken();
+        if($result["code"] == 1){
+            return json_encode($result);
+        }
+
         //Récupération du body en String
         $data = file_get_contents("php://input");
         //Conversion du string en JSON

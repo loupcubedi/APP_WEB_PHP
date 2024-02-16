@@ -30,7 +30,7 @@
                 var marker = L.marker([don.latitude, don.longitude]).addTo(map);
 
                 // Créer une popup avec un lien pour plus d'informations
-                var popupContent = '<a href="http://www.cesi.local/AdminDonDuSang/update/' + don.id + '">Cliquez ici pour plus d\'information</a>';
+                var popupContent = '<a href="http://www.cesi.local/AdminDonDuSang/details/' + don.id + '">Cliquez ici pour plus d\'information</a>';
 
                 // Attacher la popup au marqueur
                 marker.bindPopup(popupContent);
