@@ -21,9 +21,18 @@ class ApiDondusangController
             ]);
         }
 
-        $donsDuSang = DonDuSang::SqlGetAll();
+        // Vérifier si les paramètres de pagination sont présents
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : null;
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : null;
+        $offset = $page ? ($page - 1) * $limit : null;
+
+        // Appeler SqlGetAll avec ou sans paramètres de pagination
+        $donsDuSang = DonDuSang::SqlGetAll($limit, $offset);
+
         return json_encode($donsDuSang);
     }
+
+
 
 
     public function add()

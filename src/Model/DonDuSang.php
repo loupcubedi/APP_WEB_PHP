@@ -178,9 +178,25 @@ class DonDuSang implements \JsonSerializable {
 
 
 // Méthode pour obtenir tous les lieux de don du sang de la base de données
-    public static function SqlGetAll() {
+    public static function SqlGetAll($limit = null, $offset = null) {
         $bdd = BDD::getInstance();
-        $requete = $bdd->prepare('SELECT * FROM dons_du_sang');
+
+        // Construire la requête SQL de base
+        $sql = 'SELECT * FROM dons_du_sang ORDER BY id DESC';
+
+        // Ajouter la clause de limite et d'offset si la pagination est requise
+        if ($limit !== null && $offset !== null) {
+            $sql .= ' LIMIT :limit OFFSET :offset';
+        }
+
+        $requete = $bdd->prepare($sql);
+
+        // Lier les paramètres de limite et d'offset si la pagination est requise
+        if ($limit !== null && $offset !== null) {
+            $requete->bindParam(':limit', $limit, \PDO::PARAM_INT);
+            $requete->bindParam(':offset', $offset, \PDO::PARAM_INT);
+        }
+
         $requete->execute();
         $donsDuSangSql = $requete->fetchAll(\PDO::FETCH_ASSOC);
         $donsDuSangObjet = [];
@@ -201,9 +217,9 @@ class DonDuSang implements \JsonSerializable {
             $donsDuSangObjet[] = $donDuSang;
         }
 
-
         return $donsDuSangObjet;
     }
+
 
 
 // Méthode pour obtenir un lieu de don du sang spécifique par son ID
