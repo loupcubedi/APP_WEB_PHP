@@ -1,8 +1,8 @@
 <?php
 
-namespace src\Controller;
+namespace Old;
 
-use src\Model\Article;
+use src\Controller\AbstractController;
 
 class AdminArticleController extends AbstractController
 {

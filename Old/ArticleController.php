@@ -1,10 +1,11 @@
 <?php
 
-namespace src\Controller;
+namespace Old;
 
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
-use src\Model\Article;
+use src\Controller\AbstractController;
+use src\Controller\UserController;
 use src\Model\BDD;
 
 class ArticleController extends AbstractController

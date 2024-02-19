@@ -1,5 +1,7 @@
 <?php
-namespace src\Model;
+namespace Old;
+use src\Model\BDD;
+
 class Article implements \JsonSerializable {
     private ?int $Id = null;
     private ?string $Titre = null;
