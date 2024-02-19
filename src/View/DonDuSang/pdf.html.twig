@@ -19,9 +19,11 @@
     <p><strong>Prix :</strong> {{ donDuSang.prix }} places</p>
     <p><strong>Nom du contact :</strong> {{ donDuSang.nomContact }}</p>
     <p><strong>Email du contact :</strong> {{ donDuSang.emailContact }}</p>
-    {% if donDuSang.photoUrl is defined and donDuSang.photoUrl is not empty %}
+    {% if donDuSang.imageRepository is defined and donDuSang.imageRepository is not empty %}
         <p>
-            <img src="{{ donDuSang.photoUrl }}" class="img-thumbnail"/>
+            {% if file_exist('./uploads/images/' ~ donDuSang.imageRepository ~ '/' ~ donDuSang.imageFileName) and donDuSang.imageFileName != "" %}
+                <img src="/uploads/images/{{ donDuSang.imageRepository }}/{{ donDuSang.imageFileName }}" class="img-thumbnail"/>
+            {% endif %}
         </p>
     {% endif %}
 </div>
