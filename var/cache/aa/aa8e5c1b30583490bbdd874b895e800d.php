@@ -62,7 +62,12 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
 <body>
 
 <nav class=\"navbar navbar-expand-lg navbar-light bg-light\">
+    <!-- Bouton de menu hamburger pour les petits écrans -->
+    <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
+        <span class=\"navbar-toggler-icon\"></span>
+    </button>
 
+    <!-- Éléments de navigation qui se replieront dans le menu hamburger sur les petits écrans -->
     <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
         <ul class=\"navbar-nav mr-auto\">
             <li class=\"nav-item\">
@@ -79,29 +84,29 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
             </li>
         </ul>
     </div>
-    <form class=\"d-flex\">
+    <!-- <form class=\"d-flex\">
         <input class=\"form-control me-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\" id=\"Search\">
-    </form>
+    </form> -->
     ";
-        // line 39
-        if (twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "login", [], "any", true, true, false, 39)) {
-            // line 40
+        // line 44
+        if (twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "login", [], "any", true, true, false, 44)) {
+            // line 45
             echo "        <a class=\"btn btn-danger\" href=\"/User/logout\" role=\"button\">Log OUT</a>
     ";
         } else {
-            // line 42
+            // line 47
             echo "        <a class=\"btn btn-success\" href=\"/User/login\" role=\"button\">Log IN</a>
     ";
         }
-        // line 44
+        // line 49
         echo "</nav>
 
 <div class=\"container\">
 
     ";
-        // line 48
+        // line 53
         $this->displayBlock('body', $context, $blocks);
-        // line 49
+        // line 54
         echo "</div>
 
 <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4\" crossorigin=\"anonymous\"></script>
@@ -110,9 +115,9 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
 <script src=\"/assets/js/script.js\"></script>
 
 ";
-        // line 56
+        // line 61
         $this->displayBlock('javascript', $context, $blocks);
-        // line 57
+        // line 62
         echo "
 </body>
 </html>
@@ -132,13 +137,13 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
         $macros = $this->macros;
     }
 
-    // line 48
+    // line 53
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 56
+    // line 61
     public function block_javascript($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -165,7 +170,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
      */
     public function getDebugInfo()
     {
-        return array (  142 => 56,  136 => 48,  130 => 13,  123 => 8,  116 => 57,  114 => 56,  105 => 49,  103 => 48,  97 => 44,  93 => 42,  89 => 40,  87 => 39,  60 => 14,  58 => 13,  50 => 8,  41 => 1,);
+        return array (  147 => 61,  141 => 53,  135 => 13,  128 => 8,  121 => 62,  119 => 61,  110 => 54,  108 => 53,  102 => 49,  98 => 47,  94 => 45,  92 => 44,  60 => 14,  58 => 13,  50 => 8,  41 => 1,);
     }
 
     public function getSourceContext()
@@ -188,7 +193,12 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
 <body>
 
 <nav class=\"navbar navbar-expand-lg navbar-light bg-light\">
+    <!-- Bouton de menu hamburger pour les petits écrans -->
+    <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
+        <span class=\"navbar-toggler-icon\"></span>
+    </button>
 
+    <!-- Éléments de navigation qui se replieront dans le menu hamburger sur les petits écrans -->
     <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
         <ul class=\"navbar-nav mr-auto\">
             <li class=\"nav-item\">
@@ -205,9 +215,9 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
             </li>
         </ul>
     </div>
-    <form class=\"d-flex\">
+    <!-- <form class=\"d-flex\">
         <input class=\"form-control me-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\" id=\"Search\">
-    </form>
+    </form> -->
     {% if session.login is defined %}
         <a class=\"btn btn-danger\" href=\"/User/logout\" role=\"button\">Log OUT</a>
     {% else %}
