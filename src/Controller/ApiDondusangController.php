@@ -117,6 +117,100 @@ class ApiDondusangController
         ]);
     }
 
+
+    public function update()
+    {
+        if ($_SERVER["REQUEST_METHOD"] != "PUT") {
+            header("HTTP/1.1 405 Method Not Allowed");
+            return json_encode(["code" => 1, "Message" => "PUT Attendu"]);
+        }
+
+        $result = JwtService::checkToken();
+        if ($result["code"] == 1) {
+            return json_encode($result);
+        }
+
+        $data = file_get_contents("php://input");
+        $json = json_decode($data);
+
+        // Valider les données nécessaires pour la mise à jour
+        if (!isset($json->id) || !isset($json->Titre) || !isset($json->Description)) {
+            header("HTTP/1.1 403 Forbidden");
+            return json_encode(["code" => 1, "Message" => "Données manquantes pour la mise à jour"]);
+        }
+
+        $donDuSang = new DonDuSang();
+        $donDuSang->setId($json->id)
+            ->setNom($json->Titre)
+            ->setDescription($json->Description);
+
+        if (isset($json->DatePublication)) {
+            try {
+                $dateEvenement = new \DateTime($json->DatePublication);
+                $donDuSang->setDateEvenement($dateEvenement);
+            } catch (\Exception $e) {
+                return json_encode(["code" => 1, "Message" => "Format de date invalide"]);
+            }
+        }
+        if (isset($json->EmailContact)) {
+            $donDuSang->setEmailContact($json->EmailContact);
+        }
+
+        if (isset($json->Prix)) {
+            $donDuSang->setPrix($json->Prix);
+        }
+
+        if (isset($json->Latitude)) {
+            $donDuSang->setLatitude($json->Latitude);
+        }
+
+        if (isset($json->Longitude)) {
+            $donDuSang->setLongitude($json->Longitude);
+        }
+
+        if (isset($json->Auteur)) {
+            $donDuSang->setNomContact($json->Auteur);
+        }
+
+        $result = DonDuSang::SqlUpdate($donDuSang);
+
+        if ($result) {
+            return json_encode(["code" => 0, "Message" => "Don du sang mis à jour avec succès"]);
+        } else {
+            return json_encode(["code" => 1, "Message" => "Erreur lors de la mise à jour"]);
+        }
+    }
+
+    public function delete()
+    {
+        if ($_SERVER["REQUEST_METHOD"] != "DELETE") {
+            header("HTTP/1.1 405 Method Not Allowed");
+            return json_encode(["code" => 1, "Message" => "DELETE Attendu"]);
+        }
+
+        $result = JwtService::checkToken();
+        if ($result["code"] == 1) {
+            return json_encode($result);
+        }
+
+        $data = file_get_contents("php://input");
+        $json = json_decode($data);
+
+        if (!isset($json->id)) {
+            header("HTTP/1.1 403 Forbidden");
+            return json_encode(["code" => 1, "Message" => "ID manquant pour la suppression"]);
+        }
+
+        $result = DonDuSang::SqlDelete($json->id);
+
+        if ($result) {
+            return json_encode(["code" => 0, "Message" => "Don du sang supprimé avec succès"]);
+        } else {
+            return json_encode(["code" => 1, "Message" => "Erreur lors de la suppression ou l'enregistrement n'existe pas"]);
+        }
+    }
+
+
     public function search()
     {
         if($_SERVER["REQUEST_METHOD"] != "POST"){
