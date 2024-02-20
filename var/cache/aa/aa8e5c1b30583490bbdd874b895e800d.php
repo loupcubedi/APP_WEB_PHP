@@ -67,7 +67,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
         <span class=\"navbar-toggler-icon\"></span>
     </button>
 
-    <!-- Éléments de navigation qui se replieront dans le menu hamburger sur les petits écrans -->
+    <!-- Éléments de navigation pr les ecrans en cas de petit -->
     <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
         <ul class=\"navbar-nav mr-auto\">
             <li class=\"nav-item\">
@@ -198,7 +198,7 @@ class __TwigTemplate_432a7a1efa5bea16f92ea0d09fb188ff extends Template
         <span class=\"navbar-toggler-icon\"></span>
     </button>
 
-    <!-- Éléments de navigation qui se replieront dans le menu hamburger sur les petits écrans -->
+    <!-- Éléments de navigation pr les ecrans en cas de petit -->
     <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
         <ul class=\"navbar-nav mr-auto\">
             <li class=\"nav-item\">

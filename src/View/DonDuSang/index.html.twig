@@ -9,20 +9,20 @@
         </div>
         <div id="map" style="height: 700px;"></div>
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" /> <!-- ceci est le CSS qui genere la map -->
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
         <script>
             var donsDuSang = {{ donsDuSang|json_encode|raw }};
             console.log(donsDuSang);
 
-            var map = L.map('map').setView([46.603354, 1.888334], 6); // Centre de la France
+            var map = L.map('map').setView([46.603354, 1.888334], 6); // Ici on pose la localisation central de notre cart
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; ... contributors'
             }).addTo(map);
 
-            var limitedDonsDuSang = donsDuSang.slice(0, 30);
+            var limitedDonsDuSang = donsDuSang.slice(0, 30); // ici je limite le nombre de point que j'affiche
 
             limitedDonsDuSang.forEach(function(don) {
                 if (don.latitude && don.longitude) {

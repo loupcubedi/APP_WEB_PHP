@@ -6,7 +6,7 @@
     <h1>Liste des Dons du Sang</h1>
 
     <table class="table">
-        <thead>
+        <thead> <!-- Header -->
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Association</th>
@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        {% if donsDuSang is empty %}
+        {% if donsDuSang is empty %} <!-- si on a aucun don du sang, on affiche le msg suivant -->
             <tr>
                 <td colspan="6">Aucun don du sang trouvé.</td>
             </tr>
