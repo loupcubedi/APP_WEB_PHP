@@ -197,45 +197,39 @@ class AdminDonDuSangController extends AbstractController  // Grace a ca, on hé
         // Exécuter une requête qui vide la table (truncate table dons_du_sang)
         $requete = BDD::getInstance()->prepare("TRUNCATE TABLE dons_du_sang")->execute();
 
-        // Créer des tableaux avec des données pour les titres, les noms de contact et les prix
-        $arrayTitre = ["loupbd@gmail.com", "test@test.test", "lephpcrigolo@gmail.test", "motorola@gmail.com", "viveleflutter@gmail.com"];
+        $arrayTitre = ["Collectedondusang@gmail.com", "melaniecxred@wanadoo.fr", "semanionevent@gmail.com", "Ydrissdondus@gmail.com", "donpourlavie@gmail.com"];
         $arrayNomassociation = ["Croix rouge", "EFS", "Don de Sang pour la Vie", "Don du Sang Bénévole", "Solidarité Don de Sang"];
-        $arrayNomsContact = ["Levebre Pierrick", "Jean Lefrancais", "Anoa Lebron", "Caitlin DeMatos", "Loup Bauduin", "Fabien Lierville", "Zerick Leneveu"];
+        $arrayNomsContact = ["Levebre Anna", "Lucie Lefrancais", "Anoa Lebron", "Jeanne Delarue ", "Mélanie Leneveu ", "Antoine Lepotiron ", "Zerick Uzich"];
 
 
-        // Créer une variable Datetime (date du jour)
         $dateDuJour = new \DateTime();
 
-        $latitudeMin = 43.0; // Latitude minimale pour la France
-        $latitudeMax = 49.1; // Latitude maximale pour la France
-        $longitudeMin = -1.142; // Longitude minimale pour la France (point le plus à l'ouest)
-        $longitudeMax = 6.561; // Longitude maximale pour la France (point le plus à l'est)
+        $latitudeMin = 43.0;
+        $latitudeMax = 49.1;
+        $longitudeMin = -1.142;
+        $longitudeMax = 6.561;
 
-// Boucle de 200 itérations
         for ($i = 1; $i <= 200; $i++) {
             $dateDuJour->modify("+1 day");
             shuffle($arrayTitre);
 
-            // Sélectionner un nom de contact aléatoire
             $nomContact = $arrayNomsContact[array_rand($arrayNomsContact)];
             $nomAssociation = $arrayNomassociation[array_rand($arrayNomassociation)];
 
-            // Générer des latitudes et des longitudes aléatoires pour la France
-            $latitude = mt_rand($latitudeMin * 1000, $latitudeMax * 1000) / 1000; // Latitudes entre 41.0 et 51.1
-            $longitude = mt_rand($longitudeMin * 1000, $longitudeMax * 1000) / 1000; // Longitudes entre -5.142 et 9.561
+            $latitude = mt_rand($latitudeMin * 1000, $latitudeMax * 1000) / 1000;
+            $longitude = mt_rand($longitudeMin * 1000, $longitudeMax * 1000) / 1000;
 
-            // Générer un prix aléatoire entre 1 et 50
             $prixAleatoire = mt_rand(1, 50);
 
             $dondusang = new DonDuSang();
             $dondusang->setEmailContact($arrayTitre[0])
-                ->setDescription("Zypher est un langage de programmation moderne conçu pour offrir une expérience de développement puissante et flexible. Avec une syntaxe claire et concise, Zypher permet aux développeurs de créer des applications robustes et efficaces dans divers domaines, allant de l'informatique embarquée à la programmation web")
+                ->setDescription("Chaque don compte - rejoignez-nous pour cette collecte importante")
                 ->setNom($nomAssociation)
                 ->setNomContact($nomContact)
                 ->setDateEvenement($dateDuJour)
                 ->setPrix($prixAleatoire)
-                ->setLatitude($latitude) // Définir la latitude aléatoire en France
-                ->setLongitude($longitude); // Définir la longitude aléatoire en France
+                ->setLatitude($latitude)
+                ->setLongitude($longitude);
 
             DonDuSang::SqlAdd($dondusang);
         }
