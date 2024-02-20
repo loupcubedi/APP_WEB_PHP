@@ -16,7 +16,7 @@
     <p><strong>Description :</strong> {{ donDuSang.description }}</p>
     <p><strong>Date de l'événement :</strong> {{ donDuSang.date_evenement|date("d/m/Y") }}</p>
     <p><strong>Position :</strong> Latitude : {{ donDuSang.latitude }}, Longitude : {{ donDuSang.longitude }}</p>
-    <p><strong>Places :</strong> {{ donDuSang.prix }} places</p>
+    <p><strong>Place :</strong> {{ donDuSang.prix }} places</p>
     <p><strong>Nom du contact :</strong> {{ donDuSang.nomContact }}</p>
     <p><strong>Email du contact :</strong> {{ donDuSang.emailContact }}</p>
     {% if donDuSang.imageRepository is defined and donDuSang.imageRepository is not empty %}
