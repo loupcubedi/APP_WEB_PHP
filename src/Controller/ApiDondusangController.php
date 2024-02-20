@@ -35,7 +35,7 @@ class ApiDondusangController
 
 
 
-    public function add() // Utiliser pr le flutter app mobile
+    public function add() // Requete API pour le add, avec une verif JWT
     {
         if($_SERVER["REQUEST_METHOD"] != "POST"){
             header("HTTP/1.1 405 Method Not Allowed");
@@ -49,9 +49,7 @@ class ApiDondusangController
             return json_encode($result);
         }
 
-        //Récupération du body en String
         $data = file_get_contents("php://input");
-        //Conversion du string en JSON
         $json = json_decode($data);
 
         if(empty($json)){
@@ -70,21 +68,17 @@ class ApiDondusangController
             ]);
         }
 
-        // Extraction des données
         $EmailContact = isset($json->EmailContact) ? $json->EmailContact : null;
         $Prix = isset($json->Prix) ? $json->Prix : null;
         $Latitude = isset($json->Latitude) ? $json->Latitude : null;
         $Longitude = isset($json->Longitude) ? $json->Longitude : null;
 
-        //Upload de l'image
         $sqlRepository = null;
         $nomImage = null;
 
         if(isset($json->Image)){
-            // Renommer le fichier image (normalement le client envoi aussi le nom de l'image dans un autre champ pour tester les extensions, etc.)
             $nomImage = uniqid().".jpg";
 
-            // Fabriquer répertoire d'accueil
             $dateNow = new \DateTime();
             $sqlRepository = $dateNow->format("Y/m");
             $repository = "{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$sqlRepository}";
@@ -118,7 +112,7 @@ class ApiDondusangController
     }
 
 
-    public function update()
+    public function update() // Requete API pr l'update avec aussi la verif jwt
     {
         if ($_SERVER["REQUEST_METHOD"] != "PUT") {
             header("HTTP/1.1 405 Method Not Allowed");
@@ -133,7 +127,7 @@ class ApiDondusangController
         $data = file_get_contents("php://input");
         $json = json_decode($data);
 
-        // Valider les données nécessaires pour la mise à jour
+        // Ici on check si on a au moins nos données minimum necessaire pr faire l'update
         if (!isset($json->id) || !isset($json->Titre) || !isset($json->Description)) {
             header("HTTP/1.1 403 Forbidden");
             return json_encode(["code" => 1, "Message" => "Données manquantes pour la mise à jour"]);
@@ -181,7 +175,7 @@ class ApiDondusangController
         }
     }
 
-    public function delete()
+    public function delete() // Ici on definit notre fonction delete, avec lechecking de jwt
     {
         if ($_SERVER["REQUEST_METHOD"] != "DELETE") {
             header("HTTP/1.1 405 Method Not Allowed");
@@ -196,7 +190,7 @@ class ApiDondusangController
         $data = file_get_contents("php://input");
         $json = json_decode($data);
 
-        if (!isset($json->id)) {
+        if (!isset($json->id)) { // verification si l'id est manquant ou non
             header("HTTP/1.1 403 Forbidden");
             return json_encode(["code" => 1, "Message" => "ID manquant pour la suppression"]);
         }
@@ -210,31 +204,4 @@ class ApiDondusangController
         }
     }
 
-
-    public function search()
-    {
-        if($_SERVER["REQUEST_METHOD"] != "POST"){
-            header("HTTP/1.1 405 Method Not Allowed");
-            return json_encode([
-                "code" => 1,
-                "Message" => "Post Attendu"
-            ]);
-        }
-
-        //Récupération du body en String
-        $data = file_get_contents("php://input");
-        //Conversion du string en JSON
-        $json = json_decode($data);
-
-        if(!isset($json->keyword)){
-            header("HTTP/1.1 403 Forbidden");
-            return json_encode([
-                "code" => 1,
-                "Message" => "GET keyword manquant"
-            ]);
-        }
-
-        $donsDuSang = DonDuSang::SqlSearch($json->keyword);
-        return json_encode($donsDuSang);
-    }
 }
