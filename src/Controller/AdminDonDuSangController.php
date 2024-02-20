@@ -5,18 +5,17 @@ namespace src\Controller;
 use src\Model\DonDuSang;
 use src\Model\BDD;
 
-class AdminDonDuSangController extends AbstractController
+class AdminDonDuSangController extends AbstractController  // Grace a ca, on hérite de nos fonctions twig
 {
-    // Liste tous les dons du sang
-    public function list()
+    // Ici, je fais toutes les opérations qui sont liés a l'administrateur
+    public function list() // Ici on défini ma fonction List, elle me servira a avoir mon rendu dans ma liste de don dusang,
+                             //on y genere aussi un token, qu'on utilisera pr sécurisé mes autres méthode
     {
-        // Requête SQL pour obtenir tous les dons du sang
         $donsDuSang = DonDuSang::SqlGetAll();
 
         $token = bin2hex(random_bytes(32));
         $_SESSION["token"] = $token;
 
-        // Rendu de la vue
         return $this->twig->render("Admin/DonDuSang/list.html.twig", [
             "donsDuSang" => $donsDuSang,
             "token" => $token
@@ -24,8 +23,7 @@ class AdminDonDuSangController extends AbstractController
 
     }
 
-    // Supprime un don du sang
-    public function delete()
+    public function delete() // Ici , on a la fonction delete, on y check si je suis bien log en tant qu'un admininistrateur, si oui, on check le token de session
     {
         UserController::haveGoodRole(["Administrateur"]);
         if ($_SESSION["token"] == $_POST["token"]) {
@@ -35,8 +33,7 @@ class AdminDonDuSangController extends AbstractController
         header("Location:/AdminDonDuSang/list");
     }
 
-    // Ajoute un nouveau don du sang
-    public function add()
+    public function add() // Ici, pareil que pr la méthode delete, mais pr add
     {
         UserController::haveGoodRole(["Administrateur"]);
 
@@ -103,30 +100,29 @@ class AdminDonDuSangController extends AbstractController
 
 
 
-    // Met à jour un don du sang
-    public function update(int $id)
+    public function update(int $id) // ici ma méthode update, meme controle
 
     {
         UserController::haveGoodRole(["Administrateur"]);
 
-        $donDuSang = DonDuSang::SqlGetById($id);
+        $donDuSang = DonDuSang::SqlGetById($id); // on recupere le don du sang par son id
 
         if (isset($_POST["Nom"])) {
-            $sqlRepository = $donDuSang->getImageRepository(); // Utiliser l'ancien répertoire si aucun fichier n'est uploadé
-            $nomImage = $donDuSang->getImageFileName(); // Utiliser l'ancien nom de fichier si aucun fichier n'est uploadé
+            $sqlRepository = $donDuSang->getImageRepository();
+            $nomImage = $donDuSang->getImageFileName();
 
-            if (isset($_FILES["Photo"]) && $_FILES["Photo"]["error"] == 0) {
+            if (isset($_FILES["Photo"]) && $_FILES["Photo"]["error"] == 0) {     // ici on verifie si les données ont été soumise dans le formu
+
                 $extensionsAutorisee = ["jpg", "jpeg", "png"];
                 $extension = pathinfo($_FILES["Photo"]["name"], PATHINFO_EXTENSION);
 
                 if (in_array($extension, $extensionsAutorisee)) {
-                    // Suppression de l'ancienne image si elle existe
+                    // Ici on supprime l'ancienne image si elle existe
                     $oldImagePath = $_SERVER["DOCUMENT_ROOT"]."/uploads/images/".$sqlRepository."/".$nomImage;
                     if ($nomImage && file_exists($oldImagePath)) {
                         unlink($oldImagePath);
                     }
 
-                    // Création du nouveau répertoire basé sur la date actuelle
                     $dateNow = new \DateTime();
                     $sqlRepository = $dateNow->format("Y/m");
                     $repository = $_SERVER["DOCUMENT_ROOT"] . "/uploads/images/" . $sqlRepository;
@@ -134,13 +130,11 @@ class AdminDonDuSangController extends AbstractController
                         mkdir($repository, 0777, true);
                     }
 
-                    // Renommer le fichier image avec un identifiant unique
+                    // Je renomme le fichier image avec un id unique
                     $nomImage = uniqid() . "." . $extension;
 
-                    // Déplacer le fichier uploadé dans le nouveau répertoire
                     if (!move_uploaded_file($_FILES["Photo"]["tmp_name"], $repository . "/" . $nomImage)) {
-                        // En cas d'erreur lors de l'upload, afficher un message ou effectuer une action spécifique
-                        // Par exemple, renvoyer à la page de formulaire avec un message d'erreur
+
                         return $this->twig->render("Admin/DonDuSang/update.html.twig", [
                             "don" => $donDuSang,
                             "error" => "Problème lors de l'upload de l'image."
@@ -149,7 +143,7 @@ class AdminDonDuSangController extends AbstractController
                 }
             }
 
-            // Mise à jour des propriétés de l'objet DonDuSang avec les nouvelles données
+            // Puis apres tout ça, on fais la mise a jour
             $donDuSang->setNom($_POST["Nom"])
                 ->setDescription($_POST["Description"])
                 ->setDateEvenement(new \DateTime($_POST["DateEvenement"]))
@@ -161,10 +155,10 @@ class AdminDonDuSangController extends AbstractController
                 ->setImageRepository($sqlRepository)
                 ->setImageFileName($nomImage);
 
-            // Sauvegarder les modifications dans la base de données
+
             DonDuSang::SqlUpdate($donDuSang);
 
-            // Rediriger l'utilisateur vers la liste des dons du sang après la mise à jour
+
             header("Location:/AdminDonDuSang/list");
             exit();
         } else {

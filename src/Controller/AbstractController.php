@@ -5,7 +5,7 @@ namespace src\Controller;
 use Twig\Extension\DebugExtension;
 use Twig\TwigFunction;
 
-abstract class AbstractController
+abstract class AbstractController //Cette classe me permet d'initialiser twig, afin de pouvoir l'utiliser dans mon projet PHP
 {
     protected $twig;
     public function __construct()
