@@ -7,7 +7,7 @@ use src\Service\JwtService;
 
 class UserController extends AbstractController
 {
-    public function create()
+    public function create() // ici notre fonction pr créer un utilisateur
     {
         if(isset($_POST["mail"]) && isset($_POST["password"]) && isset($_POST["roles"])){
             $user = new User();
@@ -15,7 +15,7 @@ class UserController extends AbstractController
             $user->setMail($_POST["mail"])
                 ->setPassword($hashpass)
                 ->setRoles($_POST["roles"]);
-            $id = User::SqlAdd($user);
+            $id = User::SqlAdd($user); // on l'ajoute ensuite en BDD
             header("Location:/User/login");
             exit();
         }else{
@@ -23,13 +23,11 @@ class UserController extends AbstractController
         }
     }
 
-    public function login()
+    public function login() // Fonction d'identification, si l'authentification est faite, on créé une session de connexion
     {
         if(isset($_POST["mail"]) && isset($_POST["password"])){
-            //Requete SQL qui va cherches les info du User avec le mail
             $user = User::SqlGetByMail($_POST["mail"]);
             if($user!=null){
-                //Comparer le mdp hasché avec celui saisi dans le formulaire
                 if(password_verify($_POST["password"], $user->getPassword())){
                     $_SESSION["login"] = [
                         "Email" => $user->getMail(),
@@ -43,19 +41,15 @@ class UserController extends AbstractController
                 throw new \Exception("Aucun user avec ce mail en base");
             }
 
-
-            //Créer les sessions sinon Lever une Exception
-            // Et rediriger vers /AdminArticle/list
         }else{
             return $this->twig->render("User/login.html.twig");
         }
     }
 
-    public static function haveGoodRole(array $rolesCompatibles) {
+    public static function haveGoodRole(array $rolesCompatibles) { // Cette fonction va checker dans un premier temps si on est connecté, si oui, elle va check notre role
         if(!isset($_SESSION["login"])){
             throw new \Exception("Vous devez vous authentifier pour accéder à cette page");
         }
-        // Comparaison role par role
         $roleFound = false;
         foreach ($_SESSION["login"]["Roles"] as $role){
             if(in_array($role, $rolesCompatibles)){
@@ -68,14 +62,14 @@ class UserController extends AbstractController
         }
     }
 
-    public function logout()
+    public function logout() // On ferme la session
     {
         unset($_SESSION["login"]);
         header("Location:/");
     }
 
     //Route qu'on va appeler par API
-    public function loginjwt()
+    public function loginjwt() // Ici, notre fonction va checker si notre mail & notre mdp sont bien en bdd, si oui, on va pouvoir generer un jwt
     {
         header("Content-Type: application/json; charset=utf-8");
         if($_SERVER["REQUEST_METHOD"] != "POST"){
@@ -86,9 +80,7 @@ class UserController extends AbstractController
             ]);
         }
 
-        //Récupération du body en String
         $data = file_get_contents("php://input");
-        //Conversion du string en JSON
         $json = json_decode($data);
 
         if(empty($json)){
@@ -106,7 +98,6 @@ class UserController extends AbstractController
                 "Message" => "Il manque le mail ou le password"
             ]);
         }
-        // Récupérer les info de l'utilisateur par son mail
         $user = User::SqlGetByMail($json->mail);
         if($user == null){
             header("HTTP/1.1 403 Forbiden");
@@ -115,7 +106,6 @@ class UserController extends AbstractController
                 "Message" => "User inexistant"
             ]);
         }
-        // Comparer le mot de pase avec celui hashé en bdd
         if(!password_verify($json->password, $user->getPassword())){
             header("HTTP/1.1 403 Forbiden");
             return json_encode([
