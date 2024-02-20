@@ -53,21 +53,21 @@ class User
         return $this;
     }
 
-    public static function SqlAdd(User $user) :int
+    public static function SqlAdd(User $user) :int // Ici, c'est la fonction pr add un utilisateur, dans le formulaire, on y entre le mail, le mdp le nom & son role
     {
         $requete = BDD::getInstance()->prepare("INSERT INTO users (Email, Password, NomPrenom, Roles) VALUES(:Email, :Password, :NomPrenom, :Roles)");
 
         $requete->execute([
             "Email" => $user->getMail(),
             "Password" => $user->getPassword(),
-            "NomPrenom" => "Olivier Carglass", //Prévoir un champ dans le formulaire pour ça à l'avenir
+            "NomPrenom" => "Olivier Carglass",
             "Roles" => json_encode($user->getRoles())
         ]);
 
         return BDD::getInstance()->lastInsertId();
     }
 
-    public static function SqlGetByMail(string $mail): ?User
+    public static function SqlGetByMail(string $mail): ?User // une fonction bymail, pr nottament s'identifier
     {
         $requete = BDD::getInstance()->prepare("SELECT * FROM users WHERE Email=:mail");
         $requete->execute([
