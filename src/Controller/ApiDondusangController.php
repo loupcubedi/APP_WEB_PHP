@@ -198,7 +198,7 @@ class ApiDondusangController
         $result = DonDuSang::SqlDelete($json->id);
 
         if ($result) {
-            return json_encode(["code" => 0, "Message" => "Don du sang supprimé avec succès"]);
+            return json_encode(["code" => 0, "Message" => "Le Don du sang supprimé avec succès"]);
         } else {
             return json_encode(["code" => 1, "Message" => "Erreur lors de la suppression ou l'enregistrement n'existe pas"]);
         }
