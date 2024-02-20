@@ -1,11 +1,9 @@
 <?php
 
-namespace src\Controller;
+namespace Old\Article;
 
+use src\Controller\AbstractController;
 use src\Service\MailService;
-use Symfony\Component\Mailer\Mailer;
-use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mime\Email;
 
 class ContactController extends AbstractController
 {

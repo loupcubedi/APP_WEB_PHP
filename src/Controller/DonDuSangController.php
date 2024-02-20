@@ -7,7 +7,7 @@ use src\Model\DonDuSang;
 
 class DonDuSangController  extends AbstractController
 {
-    public function index()
+    public function index() //Ici la fonction index, pr getall mes données pr ma page de carte avec les dons du sang affichés
     {
         $donsDuSang = DonDuSang::SqlGetAll();
         return $this->twig->render("DonDuSang/index.html.twig", [
@@ -23,25 +23,20 @@ class DonDuSangController  extends AbstractController
         exit;
     }
 
-    public function pdf(int $id)
+    public function pdf(int $id) // ici , la fonction pr générer le pdf
     {
-        // Récupérer les détails du don du sang spécifique par ID
         $donDuSang = DonDuSang::SqlGetById($id);
 
-        // Création d'une nouvelle instance de Mpdf
         $mpdf = new Mpdf([
-            "tempDir" => $_SERVER["DOCUMENT_ROOT"]."/../var/cache/pdf" // Assurez-vous que ce chemin est correct et accessible en écriture
+            "tempDir" => $_SERVER["DOCUMENT_ROOT"]."/../var/cache/pdf" // On définit le chemin ou mettre le pdf en local
         ]);
 
-        // Générer le HTML à partir de la vue Twig spécifique pour le PDF
         $html = $this->twig->render('DonDuSang/pdf.html.twig', [
             'donDuSang' => $donDuSang
         ]);
 
-        // Écrire le HTML dans le document PDF
         $mpdf->WriteHTML($html);
 
-        // Output du PDF dans le navigateur (I pour inline)
         $mpdf->Output("dondusang-$id.pdf", 'I');
     }
 
