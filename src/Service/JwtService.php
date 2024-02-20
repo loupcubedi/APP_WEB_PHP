@@ -10,7 +10,7 @@ class JwtService
 {
     public static String $secretKey = "toto";
 
-    public static function createToken(array $datas): String
+    public static function createToken(array $datas): String // Ici, on créé notre token, qu'on réutilisera dans nos différentes méthodes
     {
         $issueAt = new \DateTime();
         $expire = new \DateTime();
@@ -24,14 +24,14 @@ class JwtService
             "datas" => CryptService::encrypt(json_encode($datas))
         ];
 
-        $jwt = JWT::encode($data,self::$secretKey,"HS512");
+        $jwt = JWT::encode($data,self::$secretKey,"HS512"); //ici on encode notre jwt, avec notreclef secrete
 
         return $jwt;
     }
 
-    public static function checkToken()
+    public static function checkToken() // ici notre fonction pr check notre token,
     {
-        if (! preg_match('/Bearer\s(\S+)/', $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
+        if (! preg_match('/Bearer\s(\S+)/', $_SERVER['HTTP_AUTHORIZATION'], $matches)) { // on est dans l'en tête ?
             $result = [
                 "code" => 1,
                 "body" => "Token non trouvé dans la requête"
@@ -49,7 +49,7 @@ class JwtService
         }
 
         try{
-            //ça remonte une exception dès qu'il trouve une erreur on on veut catch l'erreur pour la donner en JSON
+            //On réutilise notre clef, pr décoder le jwt
             $token = JWT::decode($jwt, new Key(self::$secretKey, 'HS512'));
         }catch (\Exception$e){
             $result = [
@@ -64,7 +64,7 @@ class JwtService
 
         if ($token->iss !== $serverName ||
             $token->nbf > $now->getTimestamp() ||
-            $token->exp < $now->getTimestamp())
+            $token->exp < $now->getTimestamp()) // ici on check si le token a expiré
         {
             $result = [
                 "code" => 1,

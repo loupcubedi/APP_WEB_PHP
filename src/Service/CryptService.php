@@ -2,7 +2,7 @@
 
 namespace src\Service;
 
-class CryptService
+class CryptService // cette classe nous sera utile pr crypter et decrypter nos jwt
 {
     private static $encryp_method = "aes-128-ctr";
     private static $key = "bonjour";  //Générer une clef de manière cryptographique (comme openssl_random_pseudo_bytes)
