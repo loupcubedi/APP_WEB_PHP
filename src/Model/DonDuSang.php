@@ -19,7 +19,7 @@ class DonDuSang implements \JsonSerializable {
     private ?string $image_repository = null;
     private ?string $image_filename = null;
 
-    // Getters
+    // mes getters, qui me permettrons de les appeler depuis l'exterieur de la classe
     public function getId(): ?int {
         return $this->id;
     }
@@ -133,7 +133,6 @@ class DonDuSang implements \JsonSerializable {
         return $this;
     }
 
-    // JSON Serialize
     public function jsonSerialize(): mixed {
         return [
             'id' => $this->getId(),
@@ -151,11 +150,8 @@ class DonDuSang implements \JsonSerializable {
         ];
     }
 
-    // ... (les autres parties de la classe restent inchangées)
 
-// Méthode pour ajouter un nouveau lieu de don du sang dans la base de données
-    // Méthode pour ajouter un nouveau lieu de don du sang dans la base de données
-    public static function SqlAdd(DonDuSang $donDuSang): int {
+    public static function SqlAdd(DonDuSang $donDuSang): int { // Ici ma méthode pr ajouter un don du sang
         $bdd = BDD::getInstance();
         $requete = $bdd->prepare("INSERT INTO dons_du_sang (nom, description, date_evenement, prix, latitude, longitude, nom_contact, email_contact, photo_url, image_repository, image_filename) VALUES (:nom, :description, :date_evenement, :prix, :latitude, :longitude, :nom_contact, :email_contact, :photo_url, :image_repository, :image_filename)");
 
@@ -169,22 +165,20 @@ class DonDuSang implements \JsonSerializable {
             "nom_contact" => $donDuSang->getNomContact(),
             "email_contact" => $donDuSang->getEmailContact(),
             "photo_url" => $donDuSang->getPhotoUrl(),
-            "image_repository" => $donDuSang->getImageRepository(), // Ajouter image_repository
-            "image_filename" => $donDuSang->getImageFileName() // Ajouter image_filename
+            "image_repository" => $donDuSang->getImageRepository(),
+            "image_filename" => $donDuSang->getImageFileName()
         ]);
 
         return $bdd->lastInsertId();
     }
 
 
-// Méthode pour obtenir tous les lieux de don du sang de la base de données
-    public static function SqlGetAll($limit = null, $offset = null) {
+    public static function SqlGetAll($limit = null, $offset = null) { // ici c'est un getall classqiue,
+        // mais on y ajoute la possiblité de pagination, utile surtout pr le filtre flutter
         $bdd = BDD::getInstance();
 
-        // Construire la requête SQL de base
         $sql = 'SELECT * FROM dons_du_sang ORDER BY id DESC';
 
-        // Ajouter la clause de limite et d'offset si la pagination est requise
         if ($limit !== null && $offset !== null) {
             $sql .= ' LIMIT :limit OFFSET :offset';
         }
@@ -222,11 +216,10 @@ class DonDuSang implements \JsonSerializable {
 
 
 
-// Méthode pour obtenir un lieu de don du sang spécifique par son ID
     public static function SqlGetById(int $id): DonDuSang {
         $bdd = BDD::getInstance();
         $requete = $bdd->prepare("SELECT * FROM dons_du_sang WHERE id = :id");
-        $requete->bindValue(":id", $id, \PDO::PARAM_INT); // Lier le paramètre :id
+        $requete->bindValue(":id", $id, \PDO::PARAM_INT);
         $requete->execute();
         $donDuSangData = $requete->fetch(PDO::FETCH_ASSOC);
 
@@ -247,10 +240,6 @@ class DonDuSang implements \JsonSerializable {
     }
 
 
-
-
-
-// Méthode pour mettre à jour un lieu de don du sang dans la base de données
     public static function SqlUpdate(DonDuSang $donDuSang): bool {
         $bdd = BDD::getInstance();
         $requete = $bdd->prepare("UPDATE dons_du_sang SET nom = :nom, description = :description, date_evenement = :date_evenement, prix = :prix, latitude = :latitude, longitude = :longitude, nom_contact = :nom_contact, email_contact = :email_contact, photo_url = :photo_url, image_repository = :image_repository, image_filename = :image_filename  WHERE id = :id");
@@ -266,15 +255,14 @@ class DonDuSang implements \JsonSerializable {
             "nom_contact" => $donDuSang->getNomContact(),
             "email_contact" => $donDuSang->getEmailContact(),
             "photo_url" => $donDuSang->getPhotoUrl(),
-            "image_repository" => $donDuSang->getImageRepository(), // Ajouter image_repository
-            "image_filename" => $donDuSang->getImageFileName() // Ajouter image_filename
+            "image_repository" => $donDuSang->getImageRepository(),
+            "image_filename" => $donDuSang->getImageFileName()
         ]);
 
         return $result;
     }
 
 
-// Méthode pour supprimer un lieu de don du sang de la base de données
     public static function SqlDelete(int $id): bool {
 
         $bdd = BDD::getInstance();

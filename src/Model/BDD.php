@@ -8,7 +8,7 @@ class BDD
     protected function __construct(){}
     protected function __clone(){}
 
-    private static function initInstance() :void
+    private static function initInstance() :void // Cette classe va nous permettre d'initialiser une seule connexion a la bdd, dans toute l'application
     {
         // Code de connexion
         $host = "coursphp-mariadb106";
@@ -29,7 +29,7 @@ class BDD
         }
     }
 
-    public static function getInstance() : \PDO
+    public static function getInstance() : \PDO // on créé cette fonction, pr appeler l'instance a chaque fois, cela garanti qu'on a qu'une seule instance d'aller a chaque fois
     {
         if(SELF::$instance == null){
             SELF::initInstance();
