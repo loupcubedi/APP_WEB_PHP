@@ -123,7 +123,6 @@ class DonDuSang implements \JsonSerializable {
         return $this;
     }
 
-    // Getter et setter pour image_filename
     public function getImageFileName(): ?string {
         return $this->image_filename;
     }
@@ -185,7 +184,6 @@ class DonDuSang implements \JsonSerializable {
 
         $requete = $bdd->prepare($sql);
 
-        // Lier les paramètres de limite et d'offset si la pagination est requise
         if ($limit !== null && $offset !== null) {
             $requete->bindParam(':limit', $limit, \PDO::PARAM_INT);
             $requete->bindParam(':offset', $offset, \PDO::PARAM_INT);
