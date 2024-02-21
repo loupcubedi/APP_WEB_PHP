@@ -26,76 +26,90 @@ class AdminDonDuSangController extends AbstractController  // Grace a ca, on hé
     public function delete() // Ici , on a la fonction delete, on y check si je suis bien log en tant qu'un admininistrateur, si oui, on check le token de session
     {
         UserController::haveGoodRole(["Administrateur"]);
-        if ($_SESSION["token"] == $_POST["token"]) {
-            DonDuSang::SqlDelete($_POST["id"]);
-        }
 
-        header("Location:/AdminDonDuSang/list");
+        if (isset($_SESSION["token"], $_POST["token"]) && $_SESSION["token"] == $_POST["token"] ) {
+            DonDuSang::SqlDelete($_POST["id"]);
+            header("Location:/AdminDonDuSang/list");
+            return;
+        }
+        header('HTTP/1.0 403 Forbidden');
+        echo 'Accès interdit';
+
+
+
     }
 
     public function add() // Ici, pareil que pr la méthode delete, mais pr add
     {
         UserController::haveGoodRole(["Administrateur"]);
 
-        $sqlRepository = null;
-        $nomImage = null;
 
-        if (isset($_POST["Nom"])) {
-            $donDuSang = new DonDuSang();
+            $sqlRepository = null;
+            $nomImage = null;
 
-            // Récupérer les données du formulaire
-            $nom = $_POST["Nom"];
-            $description = $_POST["Description"];
-            $dateEvenement = new \DateTime($_POST["DateEvenement"]);
-            $emailContact = $_POST["EmailContact"];
-            $nomContact = $_POST["NomContact"];
-            $prix = $_POST["Prix"];
-            $latitude = floatval($_POST["Latitude"]);
-            $longitude = floatval($_POST["Longitude"]);
+            if (isset($_POST["Nom"])) {
+                if (!(isset($_SESSION["token"], $_POST["token"]) && $_SESSION["token"] == $_POST["token"]) ){
 
-            if (isset($_FILES['Photo']) && $_FILES['Photo']['error'] == 0) {
-                $tmpName = $_FILES['Photo']['tmp_name'];
-                $name = basename($_FILES['Photo']['name']);
-                $dateNow = new \DateTime();
-                $sqlRepository = $dateNow->format("Y/m");
-                $repository = "{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$sqlRepository}";
-                if (!is_dir($repository)) {
-                    mkdir($repository, 0777, true);
+                    header('HTTP/1.0 403 Forbidden');
+                    echo 'Accès interdit';
+                    exit();
                 }
-                $uploadFile = $repository . '/' . $name;
-                if (move_uploaded_file($tmpName, $uploadFile)) {
-                    $nomImage = $name;
-                } else {
-                    header("HTTP/1.1 500 Internal Server Error");
-                    return json_encode([
-                        "code" => 1,
-                        "Message" => "Erreur lors de l'upload de l'image"
-                    ]);
+                $donDuSang = new DonDuSang();
+
+                // Récupérer les données du formulaire
+                $nom = $_POST["Nom"];
+                $description = $_POST["Description"];
+                $dateEvenement = new \DateTime($_POST["DateEvenement"]);
+                $emailContact = $_POST["EmailContact"];
+                $nomContact = $_POST["NomContact"];
+                $prix = $_POST["Prix"];
+                $latitude = floatval($_POST["Latitude"]);
+                $longitude = floatval($_POST["Longitude"]);
+
+                if (isset($_FILES['Photo']) && $_FILES['Photo']['error'] == 0) {
+                    $tmpName = $_FILES['Photo']['tmp_name'];
+                    $name = basename($_FILES['Photo']['name']);
+                    $dateNow = new \DateTime();
+                    $sqlRepository = $dateNow->format("Y/m");
+                    $repository = "{$_SERVER["DOCUMENT_ROOT"]}/uploads/images/{$sqlRepository}";
+                    if (!is_dir($repository)) {
+                        mkdir($repository, 0777, true);
+                    }
+                    $uploadFile = $repository . '/' . $name;
+                    if (move_uploaded_file($tmpName, $uploadFile)) {
+                        $nomImage = $name;
+                    } else {
+                        header("HTTP/1.1 500 Internal Server Error");
+                        return json_encode([
+                            "code" => 1,
+                            "Message" => "Erreur lors de l'upload de l'image"
+                        ]);
+                    }
                 }
+
+                // Mettre à jour les propriétés du don du sang
+                $donDuSang->setNom($nom)
+                    ->setDescription($description)
+                    ->setDateEvenement($dateEvenement)
+                    ->setEmailContact($emailContact)
+                    ->setNomContact($nomContact)
+                    ->setPrix($prix)
+                    ->setLatitude($latitude)
+                    ->setLongitude($longitude)
+                    ->setImageRepository($sqlRepository)
+                    ->setImageFileName($nomImage);
+
+                DonDuSang::SqlAdd($donDuSang);
+
+                header("Location:/AdminDonDuSang/list");
+                exit();
+            } else {
+                return $this->twig->render("Admin/DonDuSang/add.html.twig" , ['token'=>$_SESSION["token"]] );
             }
 
-            // Mettre à jour les propriétés du don du sang
-            $donDuSang->setNom($nom)
-                ->setDescription($description)
-                ->setDateEvenement($dateEvenement)
-                ->setEmailContact($emailContact)
-                ->setNomContact($nomContact)
-                ->setPrix($prix)
-                ->setLatitude($latitude)
-                ->setLongitude($longitude)
-                ->setImageRepository($sqlRepository) // Définir le répertoire de l'image
-                ->setImageFileName($nomImage); // Définir le nom de l'image
-
-            // Ajouter le don du sang à la base de données
-            DonDuSang::SqlAdd($donDuSang);
-
-            // Rediriger l'utilisateur vers la liste des dons après l'ajout
-            header("Location:/AdminDonDuSang/list");
-            exit();
-        } else {
-            return $this->twig->render("Admin/DonDuSang/add.html.twig");
         }
-    }
+
+
 
 
 
